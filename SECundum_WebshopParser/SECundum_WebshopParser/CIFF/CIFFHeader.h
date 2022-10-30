@@ -3,7 +3,7 @@
 using namespace std;
 
 class CIFFHeader {
-    vector<unsigned char> Magic{ 4 };
+    vector<unsigned char> Magic{};
     vector<unsigned char> HeaderSize;
     vector<unsigned char> ContentSize;
     vector<unsigned char> Width;

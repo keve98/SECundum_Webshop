@@ -8,10 +8,18 @@
 
 using namespace std;
 
+vector<unsigned char> LoadFileFromInput(string const& filepath)
+{
+    ifstream input(filepath, ios::binary);
+    vector<unsigned char> buffer(istreambuf_iterator<char>(input), {});
+
+    return buffer;
+}
+
 int main(int argc, const char* argv[])
 {
     try {
-        CIFFObject* toParse = new CIFFObject(LoadFileFromInput(argv[1]));
+        CIFFObject* toParse = new CIFFObject(LoadFileFromInput("C:\\Users\\Kocsi Levente\\OneDrive\\Asztali gép\\SECundum\\4.ciff"/*argv[0]*/));
 
         if (toParse->IsValid()) {
             cout << "The .caff file is successfuly read!" << endl;
@@ -28,12 +36,4 @@ int main(int argc, const char* argv[])
         cout << "Something went wrong while loading the file! Parameters: 1. file to parse." << endl;
         return 0;
     };
-}
-
-vector<unsigned char> LoadFileFromInput(string const& filepath)
-{
-    ifstream input(filepath, ios::binary);
-    vector<unsigned char> buffer(istreambuf_iterator<char>(input), {});
-
-    return buffer;
 }

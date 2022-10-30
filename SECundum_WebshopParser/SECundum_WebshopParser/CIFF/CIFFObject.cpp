@@ -9,6 +9,11 @@ CIFFObject::CIFFObject(vector<unsigned char> const& input) {
     Content = new CIFFContent(iterator, input.end());
 }
 
+CIFFObject::~CIFFObject() {
+    delete Header;
+    delete Content;
+}
+
 CIFFHeader CIFFObject::GetHeader() {
     return *Header;
 }
@@ -19,9 +24,4 @@ CIFFContent CIFFObject::GetContent() {
 
 bool CIFFObject::IsValid() {
     return (*Header).IsValid() && (*Content).IsValid((*Header).GetContentSize());
-}
-
-CIFFObject::~CIFFObject() {
-    delete Header;
-    delete Content;
 }

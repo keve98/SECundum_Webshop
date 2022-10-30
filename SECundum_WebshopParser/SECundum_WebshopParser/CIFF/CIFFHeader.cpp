@@ -77,34 +77,15 @@ bool CIFFHeader::IsValid() {
         isValid = false;
     }
 
+    /*
     if (HeaderSize.size() != 8 ||
         ConvertToInt(HeaderSize) !=
         Magic.size() + HeaderSize.size() + ContentSize.size() + Width.size() + Height.size() + Caption.size() + Tags.size()) {
         isValid = false;
     }
+    */
 
     if (ConvertToInt(ContentSize) != ConvertToInt(Height) * ConvertToInt(Width) * 3) {
-        isValid = false;
-    }
-
-    int specChar = 0;
-    for each (unsigned char c in Caption)
-    {
-        if (c == '\n') {
-            if (specChar != 0) {
-                isValid = false;
-            }
-            else {
-                specChar++;
-            }
-        }
-    }
-    if (Caption[Caption.size()-1] != '\n') {
-        isValid = false;
-
-    }
-    
-    if (Tags[Tags.size() - 1] != '\0') {
         isValid = false;
     }
 

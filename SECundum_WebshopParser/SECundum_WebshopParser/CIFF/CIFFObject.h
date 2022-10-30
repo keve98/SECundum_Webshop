@@ -9,6 +9,7 @@ class CIFFObject {
     CIFFContent* Content;
 public:
     CIFFObject(vector<unsigned char> const& input);
+    ~CIFFObject();
     CIFFHeader GetHeader();
     CIFFContent GetContent();
     bool IsValid();
