@@ -4,4 +4,4 @@
 #pragma once
 
 #include <iostream>
-#include "CIFF/CIFFObject.h"
+#include "CIFF/CIFFTester.h"

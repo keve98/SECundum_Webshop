@@ -23,6 +23,9 @@ int main(int argc, const char* argv[])
 
         if (toParse->IsValid()) {
             cout << "The .caff file is successfuly read!" << endl;
+            CIFFTester* tester = new CIFFTester();
+            tester->WriteCIFFImage(toParse);
+            delete tester;
             return 1;
         }
         else {
