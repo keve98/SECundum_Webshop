@@ -37,7 +37,7 @@ CIFFHeader::CIFFHeader(vector<unsigned char> const& headerInput) {
 int CIFFHeader::ConvertToInt(vector<unsigned char> const& toConvert) {
     int toReturn = 0;
     for (size_t i = 0; i < toConvert.size(); ++i) {
-        toReturn += toConvert[i] * pow(2, i);
+        toReturn += toConvert[i] * pow(16, i * 2);
     }
     return toReturn;
 }

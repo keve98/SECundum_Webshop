@@ -19,7 +19,7 @@ vector<unsigned char> LoadFileFromInput(string const& filepath)
 int main(int argc, const char* argv[])
 {
     try {
-        CIFFObject* toParse = new CIFFObject(LoadFileFromInput("C:\\Users\\Kocsi Levente\\OneDrive\\Asztali gép\\SECundum\\4.ciff"/*argv[0]*/));
+        CIFFObject* toParse = new CIFFObject(LoadFileFromInput("C:\\Users\\Kocsi Levente\\OneDrive\\Asztali gép\\SECundum\\6.ciff"/*argv[0]*/));
 
         if (toParse->IsValid()) {
             cout << "The .caff file is successfuly read!" << endl;

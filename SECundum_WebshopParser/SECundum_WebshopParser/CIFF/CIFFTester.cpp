@@ -49,7 +49,9 @@ void CIFFTester::WriteCIFFImage(CIFFObject* ciff) {
         ++num;
     }
     img.display();
+    img.save_bmp("test.bmp");
     
+    /*
     char* title = new char[ciff->GetHeader().GetCaption().size() + 1 + 4];
 
     auto iterator = ciff->GetHeader().GetCaption();
@@ -68,12 +70,13 @@ void CIFFTester::WriteCIFFImage(CIFFObject* ciff) {
     wf.open(title, ios::out | ios::binary);
     wf << ciff->GetHeader().GetWidth() << endl;
     wf << ciff->GetHeader().GetHeight() << endl;
-    /*
+
     auto pixels = ciff->GetContent().GetPixels();
     for (auto it = pixels.begin(); it < pixels.end() && pixels.size() > 0; it++) {
         wf << (*it);
     }
-    */
+    
     wf.close();
     delete[] title;
+    */
 }
