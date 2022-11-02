@@ -56,7 +56,7 @@ void WriteCAFFTToJSONandBMP(string title, CAFFObject* caff) {
             ++num;
         }
 
-        img.display();
+        //For testing: img.display();
         string toSave = title + "_" + to_string(i) + ".bmp";
         img.save_bmp(toSave.c_str());
     }
@@ -66,7 +66,6 @@ void WriteCAFFTToJSONandBMP(string title, CAFFObject* caff) {
     file << "{ \"Data\" : " + caff->GetJSON(title + "_0.bmp") + " }";
     file.close();
 }
-
 
 vector<unsigned char> LoadFileFromInput(string const& filepath)
 {
@@ -79,7 +78,8 @@ vector<unsigned char> LoadFileFromInput(string const& filepath)
 int main(int argc, const char* argv[])
 {
     try {
-        CAFFObject* toParse = new CAFFObject(LoadFileFromInput("C:\\Users\\Kocsi Levente\\OneDrive\\Asztali gép\\SECundum\\1.caff"/*argv[0]*/));
+        //For testing: "C:\\Users\\Kocsi Levente\\OneDrive\\Asztali gép\\SECundum\\1.caff"
+        CAFFObject* toParse = new CAFFObject(LoadFileFromInput(argv[1]));
 
         if (toParse->IsValid()) {
             cout << "The .caff file is successfuly read!" << endl;
