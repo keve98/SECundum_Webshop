@@ -1,4 +1,5 @@
 #include <vector>
+#include <string>
 #include "CIFFHeader.h"
 #include "CIFFContent.h"
 
@@ -13,4 +14,5 @@ public:
     CIFFHeader GetHeader();
     CIFFContent GetContent();
     bool IsValid();
+    string GetJSON(string fileName);
 };

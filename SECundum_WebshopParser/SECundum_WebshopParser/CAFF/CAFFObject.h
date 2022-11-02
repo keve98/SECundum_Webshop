@@ -1,4 +1,5 @@
 #include <vector>
+#include <string>
 #include "CAFFHeader.h"
 #include "CAFFCredits.h"
 #include "CAFFAnimation.h"
@@ -16,4 +17,5 @@ public:
     CAFFCredits GetCredits();
     CAFFAnimation* GetAnimationAt(int idx);
     bool IsValid();
+    string GetJSON(string fileName);
 };

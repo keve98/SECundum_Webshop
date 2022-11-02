@@ -47,3 +47,10 @@ bool CAFFAnimation::IsValid() {
     //TODO
     return true;
 }
+
+string CAFFAnimation::GetJSON(string fileName) {
+    return "{ \"ID\" : " + to_string(ConvertToInt(ID)) + ", " +
+        "\"Length\" : " + to_string(ConvertToInt(Length)) + ", " +
+        "\"Duration\" : " + to_string(ConvertToInt(Duration)) + ", " +
+        "\"CIFF\" : " + CIFF->GetJSON(fileName) + " }";
+}

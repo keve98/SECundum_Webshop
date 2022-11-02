@@ -1,4 +1,5 @@
 #include <vector>
+#include <string>
 #include "../CIFF/CIFFObject.h"
 
 using namespace std;
@@ -20,4 +21,5 @@ public:
     int GetDuration();
     CIFFObject* GetCIFF();
     bool IsValid();
+    string GetJSON(string fileName);
 };

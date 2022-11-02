@@ -28,7 +28,8 @@ CIFFHeader::CIFFHeader(vector<unsigned char>::const_iterator const& headerInput)
 
     for (auto i = iterator; i < headerInput + ConvertToInt(HeaderSize); ++i) {
         if (*i == '\0') {
-            Tags.push_back(&(*iterator));
+            auto toPush = vector<unsigned char>{iterator, i};
+            Tags.push_back(toPush);
             iterator = ++i;
         }
     }
@@ -39,6 +40,29 @@ int CIFFHeader::ConvertToInt(vector<unsigned char> const& toConvert) {
     for (size_t i = 0; i < toConvert.size(); ++i) {
         toReturn += toConvert[i] * pow(16, i * 2);
     }
+    return toReturn;
+}
+
+string CIFFHeader::ConvertToString(vector<unsigned char> const& toConvert) {
+    string toReturn = "";
+    for (size_t i = 0; i < toConvert.size(); ++i) {
+        toReturn += toConvert[i];
+    }
+    return toReturn;
+}
+
+string CIFFHeader::ConvertTagsToString(vector<vector<unsigned char>> const& toConvert) {
+    string toReturn = "";
+    for (size_t i = 0; i < toConvert.size(); ++i) {
+        auto tag = toConvert[i];
+        toReturn += "\"";
+        for (size_t j = 0; j < tag.size(); j++)
+        {
+            toReturn += tag[i];
+        }
+        toReturn += "\", ";
+    }
+    
     return toReturn;
 }
 
@@ -66,7 +90,7 @@ vector<unsigned char> CIFFHeader::GetCaption() {
     return Caption;
 }
 
-vector<const unsigned char*> CIFFHeader::GetTags() {
+vector<vector<unsigned char>> CIFFHeader::GetTags() {
     return Tags;
 }
 
@@ -90,4 +114,15 @@ bool CIFFHeader::IsValid() {
     }
 
     return isValid;
+}
+
+string CIFFHeader::GetJSON() {
+    return "{ \"Magic\" : \"" + ConvertToString(Magic) + "\", " +
+        "\"HeaderSize\" : \"" + to_string(ConvertToInt(HeaderSize)) + "\", " +
+        "\"ContentSize\" : \"" + to_string(ConvertToInt(ContentSize)) + "\", " +
+        "\"Width\" : \"" + to_string(ConvertToInt(Width)) + "\", " +
+        "\"Height\" : \"" + to_string(ConvertToInt(Height)) + "\", " +
+        "\"Caption\" : \"" + ConvertToString(Caption) + "\", " +
+        "\"Tags\" : [" + ConvertTagsToString(Tags) + "]" +
+        " }";
 }

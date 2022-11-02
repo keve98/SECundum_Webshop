@@ -10,56 +10,63 @@
 using namespace std;
 using namespace cimg_library;
 
-void WriteCAFFToJSON(CAFFObject* caff) {
-    //TODO
-}
+void WriteCAFFTToJSONandBMP(string title, CAFFObject* caff) {
+    for (size_t i = 0; i < caff->GetHeader().GetNumAnim(); i++)
+    {
+        int width = caff->GetAnimationAt(i)->GetCIFF()->GetHeader().GetWidth();
+        int height = caff->GetAnimationAt(i)->GetCIFF()->GetHeader().GetHeight();
+        CImg<float> img(width, height, 1, 3);
 
-void WriteCIFFToBMP(CIFFObject* ciff, int idx = 0) {
-    CImg<float> img(
-        ciff->GetHeader().GetWidth(),
-        ciff->GetHeader().GetHeight(), 1, 3);
-    int row = 0;
-    int col = 0;
-    int num = 1;
-    int red = 0;
-    int green = 0;
-    int blue = 0;
-    auto pixels = ciff->GetContent().GetPixels();
-    for (auto it = pixels.begin(); it < pixels.end() && pixels.size() > 0; it++) {
-        if (num % 3 == 0) {
-            blue = (int)(*it);
+        int row = 0;
+        int col = 0;
+        int num = 1;
+        int red = 0;
+        int green = 0;
+        int blue = 0;
 
-            //img(row, col, 1, 1) = red;
-            //img(row, col, 1, 2) = green;
-            //img(row, col, 1, 3) = blue;
-            unsigned char color[3];
-            color[0] = red;
-            color[1] = green;
-            color[2] = blue;
-            img.draw_point(row, col, color);
-            if (row + 1 == ciff->GetHeader().GetHeight() && col + 1 == ciff->GetHeader().GetWidth()) {
-                break;
+        auto pixels = caff->GetAnimationAt(i)->GetCIFF()->GetContent().GetPixels();
+        for (auto it = pixels.begin(); it < pixels.end() && pixels.size() > 0; it++) {
+            if (num % 3 == 0) {
+                blue = (int)(*it);
+
+                unsigned char color[3];
+                color[0] = red;
+                color[1] = green;
+                color[2] = blue;
+
+                img.draw_point(row, col, color);
+
+                if (row + 1 == height && col + 1 == width) {
+                    break;
+                }
+                if (col + 1 == width) {
+                    ++row;
+                    col = 0;
+                }
+                else {
+                    ++col;
+                }
             }
-            if (col + 1 == ciff->GetHeader().GetWidth()) {
-                ++row;
-                col = 0;
+            else if (num % 3 == 1) {
+                red = (int)(*it);
             }
             else {
-                ++col;
+                green = (int)(*it);
             }
+            ++num;
         }
-        else if (num % 3 == 1) {
-            red = (int)(*it);
-        }
-        else {
-            green = (int)(*it);
-        }
-        ++num;
+
+        img.display();
+        string toSave = title + "_" + to_string(i) + ".bmp";
+        img.save_bmp(toSave.c_str());
     }
-    img.display();
-    auto title = "test" + to_string(idx) + ".bmp";
-    img.save_bmp(title.c_str());
+
+    ofstream file;
+    file.open(title + ".json");
+    file << "{ \"Data\" : " + caff->GetJSON(title + "_0.bmp") + " }";
+    file.close();
 }
+
 
 vector<unsigned char> LoadFileFromInput(string const& filepath)
 {
@@ -76,10 +83,7 @@ int main(int argc, const char* argv[])
 
         if (toParse->IsValid()) {
             cout << "The .caff file is successfuly read!" << endl;
-            for (size_t i = 0; i < toParse->GetHeader().GetNumAnim(); i++)
-            {
-                WriteCIFFToBMP(toParse->GetAnimationAt(i)->GetCIFF(), i);
-            }
+            WriteCAFFTToJSONandBMP("myCaff", toParse);
             return 1;
         }
         else {

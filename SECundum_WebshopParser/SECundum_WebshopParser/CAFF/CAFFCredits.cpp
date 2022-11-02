@@ -38,6 +38,14 @@ int CAFFCredits::ConvertToInt(vector<unsigned char> const& toConvert) {
     return toReturn;
 }
 
+string CAFFCredits::ConvertToString(vector<unsigned char> const& toConvert) {
+    string toReturn = "";
+    for (size_t i = 0; i < toConvert.size(); ++i) {
+        toReturn += toConvert[i];
+    }
+    return toReturn;
+}
+
 int CAFFCredits::GetID() {
     return ConvertToInt(ID);
 }
@@ -77,4 +85,16 @@ vector<unsigned char> CAFFCredits::GetCreator() {
 bool CAFFCredits::IsValid() {
     //TODO
     return true;
+}
+
+string CAFFCredits::GetJSON() {
+    return "{ \"ID\" : " + to_string(ConvertToInt(ID)) + ", " +
+        "\"Length\" : " + to_string(ConvertToInt(Length)) + ", " +
+        "\"Year\" : " + to_string(ConvertToInt(Year)) + ", " +
+        "\"Month\" : " + to_string(ConvertToInt(Month)) + ", " +
+        "\"Day\" : " + to_string(ConvertToInt(Day)) + ", " +
+        "\"Hour\" : " + to_string(ConvertToInt(Hour)) + ", " +
+        "\"Minute\" : " + to_string(ConvertToInt(Minute)) + ", " +
+        "\"CreatorLen\" : " + to_string(ConvertToInt(CreatorLen)) + ", " +
+        "\"Creator\" : \"" + ConvertToString(Creator) + "\" }";;
 }

@@ -6,7 +6,7 @@ CIFFObject::CIFFObject(vector<unsigned char>::const_iterator const& input) {
     auto iterator = input;
     iterator += Header->GetHeaderSize();
 
-    Content = new CIFFContent(iterator, iterator + Header->GetContentSize());
+    Content = new CIFFContent(iterator, iterator + Header->GetContentSize(), Header->GetWidth(), Header->GetHeight());
 }
 
 CIFFObject::~CIFFObject() {
@@ -24,4 +24,9 @@ CIFFContent CIFFObject::GetContent() {
 
 bool CIFFObject::IsValid() {
     return (*Header).IsValid() && (*Content).IsValid((*Header).GetContentSize());
+}
+
+string CIFFObject::GetJSON(string fileName) {
+    return "{ \"Header\" : " + Header->GetJSON() +  ", " +
+        " \"Content\" : " + Content->GetJSON(fileName) + " }";
 }

@@ -55,3 +55,16 @@ bool CAFFObject::IsValid() {
 
     return isValid;
 }
+
+string CAFFObject::GetJSON(string fileName) {
+    string animations = "";
+
+    for each (CAFFAnimation* anim in Animations)
+    {
+        animations += anim->GetJSON(fileName) + ", ";
+    }
+
+    return "{ \"Header\" : " + Header->GetJSON() + ", " +
+        " \"Credits\" : " + Credits->GetJSON() + "," +
+        " \"Animations\" : [" + animations + "] }";
+}

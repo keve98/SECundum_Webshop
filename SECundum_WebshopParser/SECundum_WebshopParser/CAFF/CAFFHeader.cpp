@@ -27,6 +27,14 @@ int CAFFHeader::ConvertToInt(vector<unsigned char> const& toConvert) {
     return toReturn;
 }
 
+string CAFFHeader::ConvertToString(vector<unsigned char> const& toConvert) {
+    string toReturn = "";
+    for (size_t i = 0; i < toConvert.size(); ++i) {
+        toReturn += toConvert[i];
+    }
+    return toReturn;
+}
+
 int CAFFHeader::GetID() {
     return ConvertToInt(ID);
 }
@@ -55,4 +63,12 @@ bool CAFFHeader::IsValid() {
     }
 
     return isValid;
+}
+
+string CAFFHeader::GetJSON() {
+    return "{ \"ID\" : " + to_string(ConvertToInt(ID)) + ", " +
+        "\"Length\" : " + to_string(ConvertToInt(Length)) + ", " +
+        "\"Magic\" : \"" + ConvertToString(Magic) + "\", " +
+        "\"HeaderSize\" : " + to_string(ConvertToInt(HeaderSize)) + ", " +
+        "\"NumAnim\" : " + to_string(ConvertToInt(NumAnim)) + " }";
 }

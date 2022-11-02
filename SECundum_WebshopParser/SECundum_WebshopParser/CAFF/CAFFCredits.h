@@ -1,4 +1,5 @@
 #include <vector>
+#include <string>
 
 using namespace std;
 
@@ -16,6 +17,7 @@ class CAFFCredits {
     vector<unsigned char> Creator{};
 
     int ConvertToInt(vector<unsigned char> const& toConvert);
+    string ConvertToString(vector<unsigned char> const& toConvert);
 public:
     CAFFCredits(vector<unsigned char>::const_iterator const& creditsInput);
     int GetID();
@@ -28,4 +30,5 @@ public:
     int GetCreatorLen();
     vector<unsigned char> GetCreator();
     bool IsValid();
+    string GetJSON();
 };
