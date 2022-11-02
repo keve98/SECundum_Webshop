@@ -6,7 +6,7 @@ CAFFObject::CAFFObject(vector<unsigned char> const& input) {
     auto iterator = input.begin();
     iterator += Header->GetLength();
 
-    Credits = new CAFFCredits(iterator, input.end());
+    Credits = new CAFFCredits(iterator);
 
     iterator += Credits->GetLength();
 
@@ -43,9 +43,9 @@ bool CAFFObject::IsValid() {
     }
     for each (CAFFAnimation* anim in Animations)
     {
-        if (!anim->IsValid()) {
-            isValid = false;
-        }
+        //if (!anim->IsValid()) {
+        //    isValid = false;
+        //}
     }
 
     return isValid;
