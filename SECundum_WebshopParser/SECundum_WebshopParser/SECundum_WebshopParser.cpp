@@ -5,11 +5,16 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <string>
 
 using namespace std;
 using namespace cimg_library;
 
-void WriteCIFFImage(CIFFObject* ciff) {
+void WriteCAFFToJSON(CAFFObject* caff) {
+    //TODO
+}
+
+void WriteCIFFToBMP(CIFFObject* ciff, int idx = 0) {
     CImg<float> img(
         ciff->GetHeader().GetWidth(),
         ciff->GetHeader().GetHeight(), 1, 3);
@@ -52,9 +57,8 @@ void WriteCIFFImage(CIFFObject* ciff) {
         ++num;
     }
     img.display();
-    img.save_bmp("test.bmp");
-
-    //TODO json
+    auto title = "test" + to_string(idx) + ".bmp";
+    img.save_bmp(title.c_str());
 }
 
 vector<unsigned char> LoadFileFromInput(string const& filepath)
@@ -72,7 +76,10 @@ int main(int argc, const char* argv[])
 
         if (toParse->IsValid()) {
             cout << "The .caff file is successfuly read!" << endl;
-            //WriteCIFFImage(toParse);
+            for (size_t i = 0; i < toParse->GetHeader().GetNumAnim(); i++)
+            {
+                WriteCIFFToBMP(toParse->GetAnimationAt(i)->GetCIFF(), i);
+            }
             return 1;
         }
         else {

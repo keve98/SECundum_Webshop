@@ -14,6 +14,6 @@ public:
     ~CAFFObject();
     CAFFHeader GetHeader();
     CAFFCredits GetCredits();
-    CAFFAnimation GetAnimationAt(int idx);
+    CAFFAnimation* GetAnimationAt(int idx);
     bool IsValid();
 };

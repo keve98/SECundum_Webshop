@@ -36,8 +36,8 @@ CAFFCredits CAFFObject::GetCredits() {
     return *Credits;
 }
 
-CAFFAnimation CAFFObject::GetAnimationAt(int idx) {
-    return *Animations.at(idx);
+CAFFAnimation* CAFFObject::GetAnimationAt(int idx) {
+    return Animations.at(idx);
 }
 
 bool CAFFObject::IsValid() {
