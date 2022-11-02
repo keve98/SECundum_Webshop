@@ -8,7 +8,7 @@ using namespace std;
 class CAFFObject {
     CAFFHeader* Header;
     CAFFCredits* Credits;
-    CAFFAnimation[] Animations;
+    vector<CAFFAnimation*> Animations{};
 public:
     CAFFObject(vector<unsigned char> const& input);
     ~CAFFObject();

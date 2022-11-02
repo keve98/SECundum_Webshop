@@ -3,5 +3,5 @@
 
 #pragma once
 
-#include <iostream>
-#include "CIFF/CIFFTester.h"
+#include "CAFF/CAFFObject.h"
+#include "Helper/CImg.h"
