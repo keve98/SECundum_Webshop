@@ -36,7 +36,7 @@ int main(int argc, const char* argv[])
         delete toParse;
     }
     catch (...) {
-        cout << "Something went wrong while loading the file! Parameters: 1. file to parse." << endl;
+        cout << "Something went wrong while loading the file! Parameters: 1. file to parse. Output: A .bmp image file and a .json file representing the stored data in a easy form." << endl;
         return 0;
     };
 }

@@ -4,10 +4,10 @@ using namespace std;
 
 class CIFFHeader {
     vector<unsigned char> Magic{};
-    vector<unsigned char> HeaderSize;
-    vector<unsigned char> ContentSize;
-    vector<unsigned char> Width;
-    vector<unsigned char> Height;
+    vector<unsigned char> HeaderSize{};
+    vector<unsigned char> ContentSize{};
+    vector<unsigned char> Width{};
+    vector<unsigned char> Height{};
     vector<unsigned char> Caption{};
     vector<const unsigned char*> Tags{};
 
