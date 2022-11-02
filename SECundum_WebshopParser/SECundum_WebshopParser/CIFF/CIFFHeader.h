@@ -13,7 +13,7 @@ class CIFFHeader {
 
     int ConvertToInt(vector<unsigned char> const& toConvert);
 public:
-    CIFFHeader(vector<unsigned char> const& headerInput);
+    CIFFHeader(vector<unsigned char>::const_iterator const& headerInput);
     vector<unsigned char> GetMagic();
     int GetHeaderSize();
     int GetContentSize();

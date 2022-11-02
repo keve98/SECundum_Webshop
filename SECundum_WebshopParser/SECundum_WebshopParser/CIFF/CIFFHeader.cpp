@@ -1,7 +1,7 @@
 #include "CIFFHeader.h"
 
-CIFFHeader::CIFFHeader(vector<unsigned char> const& headerInput) {
-    auto iterator = headerInput.begin();
+CIFFHeader::CIFFHeader(vector<unsigned char>::const_iterator const& headerInput) {
+    auto iterator = headerInput;
 
     Magic = vector<unsigned char>{ iterator, iterator + 4 };
     iterator += 4;
@@ -26,7 +26,7 @@ CIFFHeader::CIFFHeader(vector<unsigned char> const& headerInput) {
         }
     }
 
-    for (auto i = iterator; i < headerInput.begin() + ConvertToInt(HeaderSize); ++i) {
+    for (auto i = iterator; i < headerInput + ConvertToInt(HeaderSize); ++i) {
         if (*i == '\0') {
             Tags.push_back(&(*iterator));
             iterator = ++i;

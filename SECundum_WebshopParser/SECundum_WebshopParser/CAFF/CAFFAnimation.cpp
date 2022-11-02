@@ -1,6 +1,6 @@
 #include "CAFFAnimation.h"
 
-CAFFAnimation::CAFFAnimation(vector<unsigned char>::const_iterator const& animationInput, vector<unsigned char>::const_iterator const& end) {
+CAFFAnimation::CAFFAnimation(vector<unsigned char>::const_iterator const& animationInput) {
     auto iterator = animationInput;
 
     ID = vector<unsigned char>{ iterator, iterator + 1 };
@@ -12,9 +12,7 @@ CAFFAnimation::CAFFAnimation(vector<unsigned char>::const_iterator const& animat
     Duration = vector<unsigned char>{ iterator, iterator + 8 };
     iterator += 8;
 
-    auto remainedCIFF = vector<unsigned char>{ iterator, end};
-
-    CIFF = new CIFFObject(remainedCIFF);
+    CIFF = new CIFFObject(iterator);
 }
 
 CAFFAnimation::~CAFFAnimation() {

@@ -13,7 +13,7 @@ class CAFFAnimation {
 
     int ConvertToInt(vector<unsigned char> const& toConvert);
 public:
-    CAFFAnimation(vector<unsigned char>::const_iterator const& animationInput, vector<unsigned char>::const_iterator const& end);
+    CAFFAnimation(vector<unsigned char>::const_iterator const& animationInput);
     ~CAFFAnimation();
     int GetID();
     int GetLength();

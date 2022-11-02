@@ -1,12 +1,12 @@
 #include "CIFFObject.h"
 
-CIFFObject::CIFFObject(vector<unsigned char> const& input) {
+CIFFObject::CIFFObject(vector<unsigned char>::const_iterator const& input) {
     Header = new CIFFHeader(input);
 
-    auto iterator = input.begin();
+    auto iterator = input;
     iterator += Header->GetHeaderSize();
 
-    Content = new CIFFContent(iterator, input.end());
+    Content = new CIFFContent(iterator, iterator + Header->GetContentSize());
 }
 
 CIFFObject::~CIFFObject() {

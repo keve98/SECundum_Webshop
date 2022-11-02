@@ -11,7 +11,12 @@ CAFFObject::CAFFObject(vector<unsigned char> const& input) {
     iterator += Credits->GetLength();
 
     Animations = vector<CAFFAnimation*>{};
-    //TODO
+    for (size_t i = 0; i < Header->GetNumAnim(); i++)
+    {
+        CAFFAnimation* anim = new CAFFAnimation(iterator);
+        iterator = iterator + 17 + anim->GetCIFF().GetHeader().GetHeaderSize() + anim->GetCIFF().GetHeader().GetContentSize();
+        Animations.push_back(anim);
+    }
 }
 
 CAFFObject::~CAFFObject() {

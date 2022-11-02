@@ -8,7 +8,7 @@ class CIFFObject {
     CIFFHeader* Header;
     CIFFContent* Content;
 public:
-    CIFFObject(vector<unsigned char> const& input);
+    CIFFObject(vector<unsigned char>::const_iterator const& input);
     ~CIFFObject();
     CIFFHeader GetHeader();
     CIFFContent GetContent();
