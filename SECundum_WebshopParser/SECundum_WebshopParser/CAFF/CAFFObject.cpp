@@ -43,9 +43,9 @@ bool CAFFObject::IsValid() {
     }
     for each (CAFFAnimation* anim in Animations)
     {
-        //if (!anim->IsValid()) {
-        //    isValid = false;
-        //}
+        if (!anim->IsValid()) {
+            isValid = false;
+        }
     }
 
     return isValid;
