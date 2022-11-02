@@ -4,17 +4,17 @@ CAFFObject::CAFFObject(vector<unsigned char> const& input) {
     Header = new CAFFHeader(input);
 
     auto iterator = input.begin();
-    iterator += Header->GetLength();
+    iterator = iterator + 9 + Header->GetLength();
 
     Credits = new CAFFCredits(iterator);
 
-    iterator += Credits->GetLength();
+    iterator = iterator + 9 + Credits->GetLength();
 
     Animations = vector<CAFFAnimation*>{};
     for (size_t i = 0; i < Header->GetNumAnim(); i++)
     {
         CAFFAnimation* anim = new CAFFAnimation(iterator);
-        iterator = iterator + 17 + anim->GetCIFF().GetHeader().GetHeaderSize() + anim->GetCIFF().GetHeader().GetContentSize();
+        iterator = iterator + 17 + anim->GetCIFF()->GetHeader().GetHeaderSize() + anim->GetCIFF()->GetHeader().GetContentSize();
         Animations.push_back(anim);
     }
 }

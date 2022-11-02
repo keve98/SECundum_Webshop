@@ -18,6 +18,6 @@ public:
     int GetID();
     int GetLength();
     int GetDuration();
-    CIFFObject GetCIFF();
+    CIFFObject* GetCIFF();
     bool IsValid();
 };

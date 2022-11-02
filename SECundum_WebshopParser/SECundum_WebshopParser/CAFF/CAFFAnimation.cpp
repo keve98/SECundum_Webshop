@@ -39,8 +39,8 @@ int CAFFAnimation::GetDuration() {
     return ConvertToInt(Duration);
 }
 
-CIFFObject CAFFAnimation::GetCIFF() {
-    return *CIFF;
+CIFFObject* CAFFAnimation::GetCIFF() {
+    return CIFF;
 }
 
 bool CAFFAnimation::IsValid() {
