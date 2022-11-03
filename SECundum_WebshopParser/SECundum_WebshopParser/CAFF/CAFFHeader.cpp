@@ -1,22 +1,30 @@
 #include "CAFFHeader.h"
 
-CAFFHeader::CAFFHeader(vector<unsigned char> const& headerInput) {
+CAFFHeader::CAFFHeader(vector<unsigned char> const& headerInput, int inputSize) {
     auto iterator = headerInput.begin();
 
-    ID = vector<unsigned char>{ iterator, iterator + 1 };
-    ++iterator;
+    //Before start check.
+    if (inputSize > 29) {
+        ID = vector<unsigned char>{ iterator, iterator + 1 };
+        ++iterator;
+        --inputSize;
 
-    Length = vector<unsigned char>{ iterator, iterator + 8 };
-    iterator += 8;
+        Length = vector<unsigned char>{ iterator, iterator + 8 };
+        iterator += 8;
+        inputSize -= 8;
 
-    Magic = vector<unsigned char>{ iterator, iterator + 4 };
-    iterator += 4;
+        Magic = vector<unsigned char>{ iterator, iterator + 4 };
+        iterator += 4;
+        inputSize -= 4;
 
-    HeaderSize = vector<unsigned char>{ iterator, iterator + 8 };
-    iterator += 8;
+        HeaderSize = vector<unsigned char>{ iterator, iterator + 8 };
+        iterator += 8;
+        inputSize -= 8;
 
-    NumAnim = vector<unsigned char>{ iterator, iterator + 8 };
-    iterator += 8;
+        NumAnim = vector<unsigned char>{ iterator, iterator + 8 };
+        iterator += 8;
+        inputSize -= 8;
+    }
 }
 
 int CAFFHeader::ConvertToInt(vector<unsigned char> const& toConvert) {
@@ -58,7 +66,22 @@ int CAFFHeader::GetNumAnim() {
 bool CAFFHeader::IsValid() {
     bool isValid = true;
 
-    if (Magic[0] != 'C' || Magic[1] != 'A' || Magic[2] != 'F' || Magic[3] != 'F') {
+    if (ID.size() != 1 || ConvertToInt(ID) != 1) {
+        isValid = false;
+    }
+    if (Length.size() != 8) {
+        isValid = false;
+    }
+    if (Magic.size() != 4 || Magic[0] != 'C' || Magic[1] != 'A' || Magic[2] != 'F' || Magic[3] != 'F') {
+        isValid = false;
+    }
+    if (HeaderSize.size() != 8) {
+        isValid = false;
+    }
+    else if (ConvertToInt(HeaderSize) != Magic.size() + HeaderSize.size() + NumAnim.size()) {
+        isValid = false;
+    }
+    if (NumAnim.size() != 8) {
         isValid = false;
     }
 

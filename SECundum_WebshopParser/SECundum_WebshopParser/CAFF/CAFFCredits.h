@@ -19,7 +19,7 @@ class CAFFCredits {
     int ConvertToInt(vector<unsigned char> const& toConvert);
     string ConvertToString(vector<unsigned char> const& toConvert);
 public:
-    CAFFCredits(vector<unsigned char>::const_iterator const& creditsInput);
+    CAFFCredits(vector<unsigned char>::const_iterator const& creditsInput, int inputSize);
     int GetID();
     int GetLength();
     int GetYear();

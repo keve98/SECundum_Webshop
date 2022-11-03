@@ -10,11 +10,11 @@ class CAFFAnimation {
     vector<unsigned char> Length{};
 
     vector<unsigned char> Duration{};
-    CIFFObject* CIFF{};
+    CIFFObject* CIFF = nullptr;
 
     int ConvertToInt(vector<unsigned char> const& toConvert);
 public:
-    CAFFAnimation(vector<unsigned char>::const_iterator const& animationInput);
+    CAFFAnimation(vector<unsigned char>::const_iterator const& animationInput, int inputSize);
     ~CAFFAnimation();
     int GetID();
     int GetLength();

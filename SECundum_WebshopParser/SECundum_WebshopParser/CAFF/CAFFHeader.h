@@ -15,7 +15,7 @@ class CAFFHeader {
     int ConvertToInt(vector<unsigned char> const& toConvert);
     string ConvertToString(vector<unsigned char> const& toConvert);
 public:
-    CAFFHeader(vector<unsigned char> const& headerInput);
+    CAFFHeader(vector<unsigned char> const& headerInput, int inputSize);
     int GetID();
     int GetLength();
     vector<unsigned char> GetMagic();

@@ -10,8 +10,8 @@ vector<unsigned char> CIFFContent::GetPixels() {
     return Pixels;
 }
 
-bool CIFFContent::IsValid(int contentSize) {
-    return Pixels.size() == contentSize;
+bool CIFFContent::IsValid() {
+    return (int)Pixels.size() == Height * Width * 3;
 }
 
 string CIFFContent::GetJSON(string fileName) {

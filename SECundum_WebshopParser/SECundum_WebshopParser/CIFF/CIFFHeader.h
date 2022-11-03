@@ -16,7 +16,7 @@ class CIFFHeader {
     string ConvertToString(vector<unsigned char> const& toConvert);
     string ConvertTagsToString(vector<vector<unsigned char>> const& toConvert);
 public:
-    CIFFHeader(vector<unsigned char>::const_iterator const& headerInput);
+    CIFFHeader(vector<unsigned char>::const_iterator const& headerInput, int inputSize);
     vector<unsigned char> GetMagic();
     int GetHeaderSize();
     int GetContentSize();

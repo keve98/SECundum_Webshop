@@ -34,7 +34,7 @@ void WriteCAFFTToJSONandBMP(string title, CAFFObject* caff) {
                 color[1] = green;
                 color[2] = blue;
 
-                img.draw_point(row, col, color);
+                img.draw_point(col, row, color);
 
                 if (row + 1 == height && col + 1 == width) {
                     break;
@@ -79,6 +79,7 @@ int main(int argc, const char* argv[])
 {
     try {
         //For testing: "C:\\Users\\Kocsi Levente\\OneDrive\\Asztali gép\\SECundum\\1.caff"
+        //For testing: "C:\\Users\\Kocsi Levente\\OneDrive\\Asztali gép\\SECundum\\1_bad.caff"
         CAFFObject* toParse = new CAFFObject(LoadFileFromInput(argv[1]));
 
         if (toParse->IsValid()) {

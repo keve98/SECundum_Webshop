@@ -6,10 +6,10 @@
 using namespace std;
 
 class CIFFObject {
-    CIFFHeader* Header;
-    CIFFContent* Content;
+    CIFFHeader* Header = nullptr;
+    CIFFContent* Content = nullptr;
 public:
-    CIFFObject(vector<unsigned char>::const_iterator const& input);
+    CIFFObject(vector<unsigned char>::const_iterator const& input, int inputSize);
     ~CIFFObject();
     CIFFHeader GetHeader();
     CIFFContent GetContent();

@@ -1,33 +1,46 @@
 #include "CAFFCredits.h"
 
-CAFFCredits::CAFFCredits(vector<unsigned char>::const_iterator const& creditsInput) {
-    auto iterator = creditsInput;
-    
-    ID = vector<unsigned char>{ iterator, iterator + 1 };
-    ++iterator;
+CAFFCredits::CAFFCredits(vector<unsigned char>::const_iterator const& creditsInput, int inputSize) {
+    //Before start check.
+    if (inputSize) {
+        auto iterator = creditsInput;
 
-    Length = vector<unsigned char>{ iterator, iterator + 8 };
-    iterator += 8;
+        ID = vector<unsigned char>{ iterator, iterator + 1 };
+        ++iterator;
+        --inputSize;
 
-    Year = vector<unsigned char>{ iterator, iterator + 2 };
-    iterator += 2;
+        Length = vector<unsigned char>{ iterator, iterator + 8 };
+        iterator += 8;
+        inputSize -= 8;
 
-    Month = vector<unsigned char>{ iterator, iterator + 1 };
-    ++iterator;
+        Year = vector<unsigned char>{ iterator, iterator + 2 };
+        iterator += 2;
+        inputSize -= 8;
 
-    Day = vector<unsigned char>{ iterator, iterator + 1 };
-    ++iterator;
+        Month = vector<unsigned char>{ iterator, iterator + 1 };
+        ++iterator;
+        --inputSize;
 
-    Hour = vector<unsigned char>{ iterator, iterator + 1 };
-    ++iterator;
+        Day = vector<unsigned char>{ iterator, iterator + 1 };
+        ++iterator;
+        --inputSize;
 
-    Minute = vector<unsigned char>{ iterator, iterator + 1 };
-    ++iterator;
+        Hour = vector<unsigned char>{ iterator, iterator + 1 };
+        ++iterator;
+        --inputSize;
 
-    CreatorLen = vector<unsigned char>{ iterator, iterator + 8 };
-    iterator += 8;
-    
-    Creator = vector<unsigned char>{ iterator, iterator + ConvertToInt(CreatorLen) };
+        Minute = vector<unsigned char>{ iterator, iterator + 1 };
+        ++iterator;
+        --inputSize;
+
+        CreatorLen = vector<unsigned char>{ iterator, iterator + 8 };
+        iterator += 8;
+        inputSize -= 8;
+
+        if (inputSize > ConvertToInt(CreatorLen)) {
+            Creator = vector<unsigned char>{ iterator, iterator + ConvertToInt(CreatorLen) };
+        }
+    }
 }
 
 int CAFFCredits::ConvertToInt(vector<unsigned char> const& toConvert) {
@@ -83,8 +96,37 @@ vector<unsigned char> CAFFCredits::GetCreator() {
 }
 
 bool CAFFCredits::IsValid() {
-    //TODO
-    return true;
+    bool isValid = true;
+
+    if (ID.size() != 1 || ConvertToInt(ID) != 2) {
+        isValid = false;
+    }
+    if (Length.size() != 8) {
+        isValid = false;
+    }
+    if (Year.size() != 2) {
+        isValid = false;
+    }
+    if (Month.size() != 1) {
+        isValid = false;
+    }
+    if (Day.size() != 1) {
+        isValid = false;
+    }
+    if (Hour.size() != 1) {
+        isValid = false;
+    }
+    if (Minute.size() != 1) {
+        isValid = false;
+    }
+    if (CreatorLen.size() != 8) {
+        isValid = false;
+    }
+    if (Creator.size() != ConvertToInt(CreatorLen)) {
+        isValid = false;
+    }
+
+    return isValid;
 }
 
 string CAFFCredits::GetJSON() {

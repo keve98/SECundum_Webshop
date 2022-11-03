@@ -1,18 +1,24 @@
 #include "CAFFAnimation.h"
 
-CAFFAnimation::CAFFAnimation(vector<unsigned char>::const_iterator const& animationInput) {
-    auto iterator = animationInput;
+CAFFAnimation::CAFFAnimation(vector<unsigned char>::const_iterator const& animationInput, int inputSize) {
+    //Before start check.
+    if (inputSize > 17) {
+        auto iterator = animationInput;
 
-    ID = vector<unsigned char>{ iterator, iterator + 1 };
-    ++iterator;
+        ID = vector<unsigned char>{ iterator, iterator + 1 };
+        ++iterator;
+        --inputSize;
 
-    Length = vector<unsigned char>{ iterator, iterator + 8 };
-    iterator += 8;
+        Length = vector<unsigned char>{ iterator, iterator + 8 };
+        iterator += 8;
+        inputSize -= 8;
 
-    Duration = vector<unsigned char>{ iterator, iterator + 8 };
-    iterator += 8;
+        Duration = vector<unsigned char>{ iterator, iterator + 8 };
+        iterator += 8;
+        inputSize -= 8;
 
-    CIFF = new CIFFObject(iterator);
+        CIFF = new CIFFObject(iterator, inputSize);
+    }
 }
 
 CAFFAnimation::~CAFFAnimation() {
@@ -44,8 +50,25 @@ CIFFObject* CAFFAnimation::GetCIFF() {
 }
 
 bool CAFFAnimation::IsValid() {
-    //TODO
-    return true;
+    bool isValid = true;
+
+    if (ID.size() != 1 || ConvertToInt(ID) != 3) {
+        isValid = false;
+    }
+    if (Length.size() != 8) {
+        isValid = false;
+    }
+    if (Duration.size() != 8) {
+        isValid = false;
+    }
+    if (CIFF == nullptr) {
+        isValid = false;
+    }
+    else if (!CIFF->IsValid()) {
+        isValid = false;
+    }
+
+    return isValid;
 }
 
 string CAFFAnimation::GetJSON(string fileName) {
