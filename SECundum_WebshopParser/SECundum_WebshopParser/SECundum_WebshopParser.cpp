@@ -78,21 +78,28 @@ vector<unsigned char> LoadFileFromInput(string const& filepath)
 int main(int argc, const char* argv[])
 {
     try {
-        //For testing: "C:\\Users\\Kocsi Levente\\OneDrive\\Asztali gép\\SECundum\\1.caff"
-        //For testing: "C:\\Users\\Kocsi Levente\\OneDrive\\Asztali gép\\SECundum\\1_bad.caff"
-        CAFFObject* toParse = new CAFFObject(LoadFileFromInput(argv[1]));
+        if (argc > 1) {
+            //For testing: "C:\\Users\\Kocsi Levente\\OneDrive\\Asztali gép\\SECundum\\1.caff"
+            //For testing: "C:\\Users\\Kocsi Levente\\OneDrive\\Asztali gép\\SECundum\\1_bad.caff"
+            CAFFObject* toParse = new CAFFObject(LoadFileFromInput(argv[1]));
 
-        if (toParse->IsValid()) {
-            cout << "The .caff file is successfuly read!" << endl;
-            WriteCAFFTToJSONandBMP("myCaff", toParse);
-            return 1;
+            if (toParse->IsValid()) {
+                cout << "The .caff file is successfuly read!" << endl;
+                WriteCAFFTToJSONandBMP("myCaff", toParse);
+                return 1;
+            }
+            else {
+                cout << "The .caff file is invalid and cannot be read!" << endl;
+                return 0;
+            }
+
+            delete toParse;
         }
         else {
-            cout << "The .caff file is invalid and cannot be read!" << endl;
-            return 0;
+            cout << "Please call the application with parameters!" << endl;
+            cout << "Parameters: 1. file to parse." << endl;
+            cout << "Output: A .bmp image file and a .json file representing the stored data in a easy form." << endl;
         }
-
-        delete toParse;
     }
     catch (...) {
         cout << "Something went wrong while loading the file!" << endl;
