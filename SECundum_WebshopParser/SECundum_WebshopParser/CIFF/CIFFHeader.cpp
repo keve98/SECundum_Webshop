@@ -72,9 +72,11 @@ string CIFFHeader::ConvertTagsToString(vector<vector<unsigned char>> const& toCo
         toReturn += "\"";
         for (size_t j = 0; j < tag.size(); j++)
         {
-            toReturn += tag[i];
+            toReturn += tag[i] + "\"";
         }
-        toReturn += "\", ";
+        if (i != toConvert.size() - 1) {
+            toReturn += ", ";
+        }
     }
     
     return toReturn;

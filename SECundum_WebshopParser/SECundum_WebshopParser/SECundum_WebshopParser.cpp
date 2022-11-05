@@ -63,7 +63,7 @@ void WriteCAFFTToJSONandBMP(string title, CAFFObject* caff) {
 
     ofstream file;
     file.open(title + ".json");
-    file << "{ \"Data\" : " + caff->GetJSON(title + "_0.bmp") + " }";
+    file << "{ \"Data\" : " + caff->GetJSON(title) + " }";
     file.close();
 }
 

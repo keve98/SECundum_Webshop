@@ -74,9 +74,12 @@ bool CAFFObject::IsValid() {
 string CAFFObject::GetJSON(string fileName) {
     string animations = "";
 
-    for each (CAFFAnimation* anim in Animations)
+    for (size_t i = 0; i < Animations.size(); i++)
     {
-        animations += anim->GetJSON(fileName) + ", ";
+        animations += Animations[i]->GetJSON("" + fileName + "_" + to_string(i) + ".bmp");
+        if (i != Animations.size() - 1) {
+            animations += ", ";
+        }
     }
 
     return "{ \"Header\" : " + Header->GetJSON() + ", " +
