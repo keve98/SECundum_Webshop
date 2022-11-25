@@ -5,13 +5,21 @@ import com.example.SECundum_WebshopServer.DataModels.User;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
 import com.google.firebase.cloud.FirestoreClient;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 @Service
 public class CaffService {
+
+    @Autowired
+    private HttpServletRequest request;
 
     public List<CAFF> getAllCaff() throws ExecutionException, InterruptedException {
         Firestore dbFireStore = FirestoreClient.getFirestore();
@@ -57,5 +65,24 @@ public class CaffService {
     public void deleteCaff(String id){
         Firestore dbFireStore = FirestoreClient.getFirestore();
         ApiFuture<WriteResult> writeResult = dbFireStore.collection("caffs").document(id).delete();
+    }
+
+    public String storeFile(MultipartFile file) throws IOException {
+
+        String uploadsDir = "/uploads/";
+        String realPathtoUploads =  request.getServletContext().getRealPath(uploadsDir);
+        if(! new File(realPathtoUploads).exists())
+        {
+            new File(realPathtoUploads).mkdir();
+        }
+
+
+
+        String orgName = file.getOriginalFilename();
+        String filePath = realPathtoUploads + orgName;
+        File dest = new File(filePath);
+        file.transferTo(dest);
+
+        return "redirect:/";
     }
 }

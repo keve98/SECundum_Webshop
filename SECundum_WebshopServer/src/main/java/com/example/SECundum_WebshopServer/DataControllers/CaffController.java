@@ -5,7 +5,9 @@ import com.example.SECundum_WebshopServer.DataModels.CAFF;
 import com.example.SECundum_WebshopServer.DataServices.CaffService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -30,8 +32,9 @@ public class CaffController {
     }
 
     @PostMapping("/caff/save")
-    public String saveCaff(@RequestBody CAFF caff) throws ExecutionException, InterruptedException {
-        return caffService.saveCaff(caff);
+    public String saveCaff(@RequestParam("file") MultipartFile file) throws ExecutionException, InterruptedException, IOException {
+        String response = caffService.storeFile(file);
+        return response;
     }
 
     @GetMapping("/caff/download")
