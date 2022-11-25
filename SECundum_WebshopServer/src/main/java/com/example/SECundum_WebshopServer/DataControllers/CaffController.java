@@ -19,13 +19,13 @@ public class CaffController {
         this.caffService = caffService;
     }
 
-    @GetMapping("/caff/get")
+    @GetMapping("/caff/getAll")
     public List<CAFF> getAllCaff() throws ExecutionException, InterruptedException {
         return caffService.getAllCaff();
     }
 
     @GetMapping("/caff/get")
-    public CAFF getById(@RequestParam String id) throws ExecutionException, InterruptedException {
+    public CAFF getCaffById(@RequestParam String id) throws ExecutionException, InterruptedException {
         return caffService.getById(id);
     }
 

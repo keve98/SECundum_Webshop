@@ -2,27 +2,28 @@ package com.example.SECundum_WebshopServer.DataServices;
 
 
 import com.example.SECundum_WebshopServer.DataModels.User;
-import com.google.api.core.ApiFunction;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
 import com.google.firebase.cloud.FirestoreClient;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
-import javax.swing.text.Document;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 @Service
-public class UserService {
+public class UserService implements UserDetailsService {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
@@ -56,23 +57,21 @@ public class UserService {
         }
 
         if(bCryptPasswordEncoder.matches(u.getPassword(), user.getPassword())) {
-            user.setVerificationCode("");
-            user.setPassword("");
             return user;
         }else{
             throw new Exception("Invalid password for username: " + username);
         }
     }
 
-    public String saveUser(User user) throws ExecutionException, InterruptedException {
+    public ResponseEntity<?> saveUser(User user) throws ExecutionException, InterruptedException {
         User user_tmp = getUser(user.getUsername());
         if(user_tmp == null) {
             user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
             Firestore dbFireStore = FirestoreClient.getFirestore();
             ApiFuture<WriteResult> collectionsApiFuture = dbFireStore.collection("users").document(user.getUsername()).set(user);
-            return collectionsApiFuture.get().getUpdateTime().toString();
+            return ResponseEntity.ok(user);
         }
-        return "Already exists";
+        return (ResponseEntity<?>) ResponseEntity.notFound();
     }
 
     public User getUser(String username) throws ExecutionException, InterruptedException {
@@ -111,6 +110,22 @@ public class UserService {
 
     }
 
+    public ResponseEntity<?> getUserByToken(String code) throws ExecutionException, InterruptedException {
+        Firestore dbFireStore = FirestoreClient.getFirestore();
+        ApiFuture<QuerySnapshot> future = dbFireStore.collection("users").whereEqualTo("jwtToken", code).get();
+        Object document = future.get();
+
+        User user;
+        if(document != null){
+            List<User> userList =
+                    future.get().toObjects(User.class);
+            user = userList.get(0);
+            return ResponseEntity.ok(user);
+        }
+
+        return (ResponseEntity<?>) ResponseEntity.notFound();
+    }
+
     public void sendVerificationEmail(User user) throws MessagingException, UnsupportedEncodingException {
         String toAddress = user.getEmail();
         String fromAddress = "secsecundumundum@gmail.com";
@@ -140,5 +155,19 @@ public class UserService {
         mailSender.send(message);
 
 
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        UserDetails u = null;
+        try {
+            u = getUser(username);
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        return u;
     }
 }

@@ -3,7 +3,10 @@ package com.example.SECundum_WebshopServer.DataControllers;
 import com.example.SECundum_WebshopServer.DataModels.User;
 import com.example.SECundum_WebshopServer.DataServices.UserService;
 import com.example.SECundum_WebshopServer.RandomString;
+import com.example.SECundum_WebshopServer.Security.Config.JwtTokenUtil;
+import com.example.SECundum_WebshopServer.Security.model.JwtResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.concurrent.ExecutionException;
@@ -14,12 +17,15 @@ public class UserController {
     public UserService userService;
 
     @Autowired
+    private JwtTokenUtil jwtTokenUtil;
+
+    @Autowired
     public UserController(UserService userService) {
         this.userService = userService;
     }
 
     @PostMapping("/user/save")
-    public String saveUser(@RequestBody User user) throws Exception {
+    public ResponseEntity<?> saveUser(@RequestBody User user) throws Exception {
 
         String username = user.getUsername();
         String password = user.getPassword();
@@ -44,16 +50,15 @@ public class UserController {
         return userService.saveUser(newUserEntity);
     }
 
+    // nem kell
     @GetMapping("/user/get")
     public User getUser(@RequestParam String username) throws Exception {
-
-        userService.getUserByVerificationCode("verCode");
 
         User user = userService.getUser(username);
         if(user == null){
             throw new Exception("User not found.");
         }
-        return null;
+        return user;
     }
 
     @GetMapping("/user/verify")
@@ -74,10 +79,12 @@ public class UserController {
     }
 
     @GetMapping("/user/login")
-    public User loginUser(@RequestBody User user) throws Exception {
+    public ResponseEntity<?> loginUser(@RequestBody User user) throws Exception {
         User loggedInUser = userService.login(user);
+        final String token = jwtTokenUtil.generateToken(loggedInUser);
+        loggedInUser.setJwtToken(token);
 
-        return loggedInUser;
+        userService.updateUser(loggedInUser);
+        return ResponseEntity.ok(new JwtResponse(token));
     }
-
 }
