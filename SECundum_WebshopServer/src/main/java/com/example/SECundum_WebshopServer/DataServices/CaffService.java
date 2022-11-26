@@ -2,16 +2,22 @@ package com.example.SECundum_WebshopServer.DataServices;
 
 import com.example.SECundum_WebshopServer.DataModels.CAFF;
 import com.example.SECundum_WebshopServer.DataModels.User;
+import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
 import com.google.firebase.cloud.FirestoreClient;
+import com.google.gson.JsonParser;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.File;
-import java.io.IOException;
+import javax.swing.*;
+import java.awt.*;
+import java.io.*;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -67,22 +73,66 @@ public class CaffService {
         ApiFuture<WriteResult> writeResult = dbFireStore.collection("caffs").document(id).delete();
     }
 
-    public String storeFile(MultipartFile file) throws IOException {
-
+    public ResponseEntity<?> storeFile(MultipartFile file) throws IOException, InterruptedException {
         String uploadsDir = "/uploads/";
-        String realPathtoUploads =  request.getServletContext().getRealPath(uploadsDir);
+        String projectPath = System.getProperty("user.dir");
+        String realPathtoUploads = projectPath + uploadsDir;
         if(! new File(realPathtoUploads).exists())
         {
             new File(realPathtoUploads).mkdir();
         }
 
-
-
         String orgName = file.getOriginalFilename();
-        String filePath = realPathtoUploads + orgName;
+        String filePath = realPathtoUploads + orgName; //feltöltött fájl teljes elérési útja, parsernek kell beadni
         File dest = new File(filePath);
         file.transferTo(dest);
+        caffParsing(filePath, projectPath);
 
-        return "redirect:/";
+        String pathToParsedFiles = projectPath;
+        pathToParsedFiles = pathToParsedFiles.replace("SECundum_WebshopServer", "");
+        pathToParsedFiles += "SECundum_WebshopParser\\out\\build\\x64-Debug\\SECundum_WebshopParser";
+
+        ClassLoader classLoader = getClass().getClassLoader();
+
+        String caffJsonPath = pathToParsedFiles + "\\myCaff.json";
+
+        //String caffName = getCaffNameFromJson(caffJsonPath);
+
+
+        String caffImagePath = pathToParsedFiles + "\\myCaff_0.bmp";
+
+        //Image image = new ImageIcon(caffImagePath).getImage();
+
+
+
+        return ResponseEntity.ok().body(image);
+    }
+
+
+    //TODO
+    private String getCaffNameFromJson(String caffJsonPath) throws FileNotFoundException {
+        JsonParser parser = new JsonParser();
+
+        Object obj = parser.parse(new FileReader(caffJsonPath));
+
+        JSONObject jsonObject = (JSONObject) obj;
+        JSONArray animation = (JSONArray) jsonObject.get("Animations");
+        JSONObject ciff = (JSONObject) animation.get(0);
+        JSONObject header = (JSONObject) ciff.get("Header");
+        String caption = (String) header.get("Caption");
+        return caption;
+    }
+
+    public void caffParsing(String filePath, String projectPath) throws IOException, InterruptedException {
+        String[] command = new String[3];
+        command[0] = "cmd";
+        command[1] = "/c";
+        command[2] = "cd.. & cd SECundum_WebshopParser\\out\\build\\x64-Debug\\SECundum_WebshopParser & SECundum_WebshopParser.exe \""+filePath +"\"";
+
+        Process process = Runtime.getRuntime().exec(command);
+
+
+        int exitCode = process.waitFor();
+        System.out.println("\nExited with error code : " + exitCode);
     }
 }
