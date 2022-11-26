@@ -2,13 +2,17 @@ package com.example.SECundum_WebshopServer.DataServices;
 
 import com.example.SECundum_WebshopServer.DataModels.CAFF;
 import com.example.SECundum_WebshopServer.DataModels.User;
+import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.databind.util.JSONPObject;
+import com.google.api.client.json.Json;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
 import com.google.firebase.cloud.FirestoreClient;
-import com.google.gson.JsonParser;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -63,7 +67,7 @@ public class CaffService {
 
     public String saveCaff(CAFF caff) throws ExecutionException, InterruptedException {
         Firestore dbFireStore = FirestoreClient.getFirestore();
-        ApiFuture<WriteResult> collectionsApiFuture = dbFireStore.collection("caffs").document(caff.getId()).set(caff);
+        ApiFuture<WriteResult> collectionsApiFuture = dbFireStore.collection("caffs").document(caff.getContent()).set(caff);
         return collectionsApiFuture.get().getUpdateTime().toString();
 
     }
@@ -73,7 +77,7 @@ public class CaffService {
         ApiFuture<WriteResult> writeResult = dbFireStore.collection("caffs").document(id).delete();
     }
 
-    public ResponseEntity<?> storeFile(MultipartFile file) throws IOException, InterruptedException {
+    public ResponseEntity<?> storeFile(MultipartFile file) throws IOException, InterruptedException, ParseException {
         String uploadsDir = "/uploads/";
         String projectPath = System.getProperty("user.dir");
         String realPathtoUploads = projectPath + uploadsDir;
@@ -96,30 +100,32 @@ public class CaffService {
 
         String caffJsonPath = pathToParsedFiles + "\\myCaff.json";
 
-        //String caffName = getCaffNameFromJson(caffJsonPath);
+        String caffName = getCaffNameFromJson(caffJsonPath);
 
 
         String caffImagePath = pathToParsedFiles + "\\myCaff_0.bmp";
 
-        //Image image = new ImageIcon(caffImagePath).getImage();
+        Image image = new ImageIcon(caffImagePath).getImage();
 
 
-
-        return ResponseEntity.ok().body(image);
+        return ResponseEntity.ok().body(new InputStreamReader());
     }
 
 
     //TODO
-    private String getCaffNameFromJson(String caffJsonPath) throws FileNotFoundException {
-        JsonParser parser = new JsonParser();
+    private String getCaffNameFromJson(String caffJsonPath) throws IOException, ParseException {
+        File file = new File(caffJsonPath);
+        JSONParser parser = new JSONParser();
+        Object obj = parser.parse(new FileReader(file));
 
-        Object obj = parser.parse(new FileReader(caffJsonPath));
-
-        JSONObject jsonObject = (JSONObject) obj;
-        JSONArray animation = (JSONArray) jsonObject.get("Animations");
-        JSONObject ciff = (JSONObject) animation.get(0);
+        JSONObject object = (JSONObject) obj;
+        JSONObject data = (JSONObject) object.get("Data");
+        JSONArray animations = (JSONArray) data.get("Animations");
+        JSONObject animation = (JSONObject) animations.get(0);
+        JSONObject ciff = (JSONObject) animation.get("CIFF");
         JSONObject header = (JSONObject) ciff.get("Header");
         String caption = (String) header.get("Caption");
+
         return caption;
     }
 

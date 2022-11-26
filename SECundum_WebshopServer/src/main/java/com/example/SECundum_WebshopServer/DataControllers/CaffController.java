@@ -3,6 +3,7 @@ package com.example.SECundum_WebshopServer.DataControllers;
 
 import com.example.SECundum_WebshopServer.DataModels.CAFF;
 import com.example.SECundum_WebshopServer.DataServices.CaffService;
+import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -33,7 +34,7 @@ public class CaffController {
     }
 
     @PostMapping("/caff/save")
-    public ResponseEntity<?> saveCaff(@RequestParam("file") MultipartFile file) throws ExecutionException, InterruptedException, IOException {
+    public ResponseEntity<?> saveCaff(@RequestParam("file") MultipartFile file) throws ExecutionException, InterruptedException, IOException, ParseException {
         return caffService.storeFile(file);
     }
 
