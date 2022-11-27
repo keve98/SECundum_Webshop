@@ -40,8 +40,6 @@ public class CaffService {
 
             for(CAFF c : caffList){
                 c.setCaffFile(new File(uploadsDir + c.getContent().replace(" ", "_") + ".caff"));
-
-                c.setImage(new File(uploadsDir + c.getContent().replace(" ", "_") + ".png"));
             }
             return caffList;
         }
@@ -129,7 +127,7 @@ public class CaffService {
         File outputFile = new File(outputpath);
         ImageIO.write(bmpImage, "PNG", outputFile);
 
-        File uploads = new File(realPathtoUploads + "\\" + caffName.replace( " ", "_") + ".png");
+        File uploads = new File(projectPath.replace("SECundum_WebshopServer", "SECundum_WebshopClient") + "\\SECundumWebshopClient\\src\\assets\\caff_pictures\\" + caffName.replace( " ", "_") + ".png");
 
         FileUtils.copyFile(outputFile, uploads);
 
