@@ -71,7 +71,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		httpSecurity.csrf().disable()
 				// dont authenticate this particular request
 				.authorizeRequests()
-				.antMatchers("/authenticate","/caff/save", "/user/login", "/user/save", "/user/verify", "/comment/getAll").permitAll()
+				.antMatchers("/authenticate","/caff/save", "/user/login", "/user/save", "/user/verify", "/comment/getAll", "/caff/getAll", "/caff/get", "/caff/save", "/caff/download").permitAll()
 				.antMatchers("/user/get", "/comment/delete").hasRole("ADMIN")
 				.antMatchers("/comment/save").hasAnyRole("ADMIN", "USER")
 				// all other requests need to be authenticated

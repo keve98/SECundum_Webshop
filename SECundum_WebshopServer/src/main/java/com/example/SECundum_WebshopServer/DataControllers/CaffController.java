@@ -24,22 +24,22 @@ public class CaffController {
     }
 
     @GetMapping("/caff/getAll")
-    public List<CAFF> getAllCaff() throws ExecutionException, InterruptedException {
-        return caffService.getAllCaff();
+    public ResponseEntity<List<CAFF>> getAllCaff() throws Exception {
+        return ResponseEntity.ok(caffService.getAllCaff());
     }
 
     @GetMapping("/caff/get")
-    public CAFF getCaffById(@RequestParam String id) throws ExecutionException, InterruptedException {
-        return caffService.getById(id);
+    public ResponseEntity<CAFF> getCaffById(@RequestParam String name) throws Exception {
+        return ResponseEntity.ok(caffService.getByName(name));
     }
 
     @PostMapping("/caff/save")
-    public ResponseEntity<?> saveCaff(@RequestParam("file") MultipartFile file) throws ExecutionException, InterruptedException, IOException, ParseException {
-        return caffService.storeFile(file);
+    public ResponseEntity<CAFF> saveCaff(@RequestParam("file") MultipartFile file) throws Exception {
+        return ResponseEntity.ok(caffService.saveCaff(file));
     }
 
     @GetMapping("/caff/download")
-    public CAFF downloadCaff(@RequestParam String id) throws ExecutionException, InterruptedException {
-        return caffService.downloadCaff(id);
+    public ResponseEntity<CAFF> downloadCaff(@RequestParam String name) throws Exception {
+        return ResponseEntity.ok(caffService.downloadCaff(name));
     }
 }

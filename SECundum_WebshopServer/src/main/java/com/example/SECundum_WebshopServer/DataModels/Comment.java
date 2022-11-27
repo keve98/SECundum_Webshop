@@ -9,7 +9,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Getter
 @Setter
 public class Comment {
-    private static AtomicInteger ID_GENERATOR = new AtomicInteger(1000);
+    private static AtomicInteger ID_GENERATOR = new AtomicInteger(0);
 
     private String id;
     private String caff_name;

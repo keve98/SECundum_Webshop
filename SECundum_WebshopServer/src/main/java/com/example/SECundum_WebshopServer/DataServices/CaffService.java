@@ -1,29 +1,27 @@
 package com.example.SECundum_WebshopServer.DataServices;
 
 import com.example.SECundum_WebshopServer.DataModels.CAFF;
-import com.example.SECundum_WebshopServer.DataModels.User;
-import com.fasterxml.jackson.annotation.JsonValue;
-import com.fasterxml.jackson.databind.util.JSONPObject;
-import com.google.api.client.json.Json;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
 import com.google.firebase.cloud.FirestoreClient;
+import org.apache.commons.io.FileUtils;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.json.simple.JSONValue;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
-import javax.swing.*;
-import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 @Service
 public class CaffService {
@@ -31,56 +29,71 @@ public class CaffService {
     @Autowired
     private HttpServletRequest request;
 
-    public List<CAFF> getAllCaff() throws ExecutionException, InterruptedException {
+    public List<CAFF> getAllCaff() throws Exception {
         Firestore dbFireStore = FirestoreClient.getFirestore();
         ApiFuture<QuerySnapshot> future = dbFireStore.collection("caffs").get();
         Object document = future.get();
-
+        String uploadsDir = getUploadsDirPath();
         if(document != null){
             List<CAFF> caffList =
                     future.get().toObjects(CAFF.class);
+
+            for(CAFF c : caffList){
+                c.setCaffFile(new File(uploadsDir + c.getContent().replace(" ", "_") + ".caff"));
+
+                c.setImage(new File(uploadsDir + c.getContent().replace(" ", "_") + ".png"));
+            }
             return caffList;
         }
-        return null;
+
+        return new ArrayList<>();
 
     }
 
-    public CAFF getById(String id) throws ExecutionException, InterruptedException {
+    public CAFF getByName(String name) throws Exception {
         Firestore dbFireStore = FirestoreClient.getFirestore();
-        DocumentReference documentReference = dbFireStore.collection("caffs").document(id);
+        DocumentReference documentReference = dbFireStore.collection("caffs").document(name);
         ApiFuture<DocumentSnapshot> future = documentReference.get();
         DocumentSnapshot document = future.get();
         CAFF caff;
+
         if(document.exists()){
             caff = document.toObject(CAFF.class);
             return caff;
         }
-        return null;
+        throw new Exception("Cannot find image with name: " + name);
 
     }
 
-    public CAFF downloadCaff(String id) throws ExecutionException, InterruptedException {
-        CAFF caff = getById(id);
-        deleteCaff(id);
+    public CAFF downloadCaff(String name) throws Exception {
+        CAFF caff = getByName(name);
+        deleteCaff(name);
         return caff;
     }
 
-    public String saveCaff(CAFF caff) throws ExecutionException, InterruptedException {
+    public CAFF saveCaff(MultipartFile file) throws Exception {
+        CAFF caff = uploadedCaffHandle(file);
         Firestore dbFireStore = FirestoreClient.getFirestore();
         ApiFuture<WriteResult> collectionsApiFuture = dbFireStore.collection("caffs").document(caff.getContent()).set(caff);
-        return collectionsApiFuture.get().getUpdateTime().toString();
-
+        return caff;
     }
 
-    public void deleteCaff(String id){
+    public void deleteCaff(String name){
         Firestore dbFireStore = FirestoreClient.getFirestore();
-        ApiFuture<WriteResult> writeResult = dbFireStore.collection("caffs").document(id).delete();
+        ApiFuture<WriteResult> writeResult = dbFireStore.collection("caffs").document(name).delete();
     }
 
-    public ResponseEntity<?> storeFile(MultipartFile file) throws IOException, InterruptedException, ParseException {
-        String uploadsDir = "/uploads/";
+    public String getUploadsDirPath(){
+        return System.getProperty("user.dir") + "/uploads/";
+    }
+
+    public CAFF uploadedCaffHandle(MultipartFile file) throws Exception {
+        if(!file.getOriginalFilename().contains(".caff")){
+            throw new Exception("Extension of the file is not caff");
+        }
+
         String projectPath = System.getProperty("user.dir");
-        String realPathtoUploads = projectPath + uploadsDir;
+        String realPathtoUploads = getUploadsDirPath();
         if(! new File(realPathtoUploads).exists())
         {
             new File(realPathtoUploads).mkdir();
@@ -88,31 +101,47 @@ public class CaffService {
 
         String orgName = file.getOriginalFilename();
         String filePath = realPathtoUploads + orgName; //feltöltött fájl teljes elérési útja, parsernek kell beadni
+
+        // save given caff file to uploads directory
         File dest = new File(filePath);
         file.transferTo(dest);
-        caffParsing(filePath, projectPath);
+
+        //parse caff file to json and bmp with cmd commands
+        caffParsing(filePath);
 
         String pathToParsedFiles = projectPath;
         pathToParsedFiles = pathToParsedFiles.replace("SECundum_WebshopServer", "");
         pathToParsedFiles += "SECundum_WebshopParser\\out\\build\\x64-Debug\\SECundum_WebshopParser";
 
-        ClassLoader classLoader = getClass().getClassLoader();
 
         String caffJsonPath = pathToParsedFiles + "\\myCaff.json";
 
+        //get caffsContentName
         String caffName = getCaffNameFromJson(caffJsonPath);
 
 
+        // get created bmp image and store in image variable
         String caffImagePath = pathToParsedFiles + "\\myCaff_0.bmp";
 
-        Image image = new ImageIcon(caffImagePath).getImage();
+        //convert bmp to png
+        BufferedImage bmpImage = ImageIO.read(new File(caffImagePath));
+        String outputpath = pathToParsedFiles + "\\"+ caffName.replace( " ", "_") + ".png";
+        File outputFile = new File(outputpath);
+        ImageIO.write(bmpImage, "PNG", outputFile);
+
+        File uploads = new File(realPathtoUploads + "\\" + caffName.replace( " ", "_") + ".png");
+
+        FileUtils.copyFile(outputFile, uploads);
+
+        //rename caff file in upload directory
+        Path source = Paths.get(filePath);
+        Files.move(source, source.resolveSibling(caffName.replace(" ", "_") + ".caff"));
 
 
-        return ResponseEntity.ok().body(new InputStreamReader());
+        CAFF caff = new CAFF(caffName);
+        return caff;
     }
 
-
-    //TODO
     private String getCaffNameFromJson(String caffJsonPath) throws IOException, ParseException {
         File file = new File(caffJsonPath);
         JSONParser parser = new JSONParser();
@@ -129,7 +158,7 @@ public class CaffService {
         return caption;
     }
 
-    public void caffParsing(String filePath, String projectPath) throws IOException, InterruptedException {
+    public void caffParsing(String filePath) throws IOException, InterruptedException {
         String[] command = new String[3];
         command[0] = "cmd";
         command[1] = "/c";
