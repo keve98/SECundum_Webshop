@@ -54,9 +54,10 @@ public class CaffService {
         ApiFuture<DocumentSnapshot> future = documentReference.get();
         DocumentSnapshot document = future.get();
         CAFF caff;
-
+        String uploadsDir = getUploadsDirPath();
         if(document.exists()){
             caff = document.toObject(CAFF.class);
+            caff.setCaffFile(new File(uploadsDir + caff.getContent().replace(" ", "_") + ".caff"));
             return caff;
         }
         throw new Exception("Cannot find image with name: " + name);

@@ -9,9 +9,11 @@ import { UserService } from "../user_service";
     templateUrl: 'registration.component.html'
 })
 export class RegistrationComponent{
-    
 
-    
+
+
+
+
     public user= new User();
 
     constructor(private userService: UserService, private router : Router){ }
