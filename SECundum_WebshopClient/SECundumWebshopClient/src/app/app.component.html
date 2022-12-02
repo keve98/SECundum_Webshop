@@ -7,8 +7,8 @@
         <input type="text" class="search-box" placeholder="search pictures">
         <button class="search-btn">search</button>
       </div>
-      <a routerLink="/login"><img src="/assets/login.png" alt=""></a>
-      <a class="nav-item" routerLink="/registration">Registration</a>
+      <a routerLink="/login"><img src="/assets/sign_in.png" alt=""></a>
+      <a routerLink="/registration"><img src="/assets/sign_up.png" alt=""></a>
     </div>
   </div>
 </nav>
@@ -16,5 +16,10 @@
 <div class="main">
   <div class="container">
     <router-outlet></router-outlet>
+  </div>
+  <div class="imgcontainer">
+    <div class="gallery" *ngFor="let image of _albums; let i=index">
+      <img src="{{image.thumb}}" (click)="open(i)"/>
+    </div>
   </div>
 </div>
