@@ -1,9 +1,11 @@
 package com.example.SECundum_WebshopServer.Security.Config;
 
 import com.example.SECundum_WebshopServer.DataServices.UserService;
+import jdk.jfr.Relational;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -28,6 +30,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 
 	@Autowired
+	@Lazy
 	private JwtRequestFilter jwtRequestFilter;
 
 	/*@Autowired
@@ -71,9 +74,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		httpSecurity.csrf().disable()
 				// dont authenticate this particular request
 				.authorizeRequests()
-				.antMatchers("/authenticate","/caff/save", "/user/login", "/user/save", "/user/verify", "/comment/getAll", "/caff/getAll", "/caff/get", "/caff/save", "/caff/download").permitAll()
+				.antMatchers("/authenticate","/user/login", "/user/verify", "/comment/getAll", "/caff/getAll", "/caff/get", "/user/save").permitAll()
 				.antMatchers("/user/get", "/comment/delete").hasRole("ADMIN")
-				.antMatchers("/comment/save").hasAnyRole("ADMIN", "USER")
+				.antMatchers("/comment/save", "/caff/save", "/caff/download").hasAnyRole("ADMIN", "USER")
 				// all other requests need to be authenticated
 				.anyRequest().authenticated().and().
 				// make sure we use stateless session; session won't be used to

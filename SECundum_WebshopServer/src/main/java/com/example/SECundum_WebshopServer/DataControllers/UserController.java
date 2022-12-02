@@ -6,6 +6,7 @@ import com.example.SECundum_WebshopServer.RandomString;
 import com.example.SECundum_WebshopServer.Security.Config.JwtTokenUtil;
 import com.example.SECundum_WebshopServer.Security.model.JwtResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,7 +21,7 @@ public class UserController {
     private JwtTokenUtil jwtTokenUtil;
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(@Lazy UserService userService) {
         this.userService = userService;
     }
 
@@ -50,7 +51,6 @@ public class UserController {
         return userService.saveUser(newUserEntity);
     }
 
-    // nem kell
     @GetMapping("/user/get")
     public User getUser(@RequestParam String username) throws Exception {
 
