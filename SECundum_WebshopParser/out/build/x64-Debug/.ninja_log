@@ -1,0 +1,12 @@
+# ninja log v5
+24	571	6910983915149676	SECundum_WebshopParser/CMakeFiles/SECundum_WebshopParser.dir/CAFF/CAFFCredits.cpp.obj	7e21dfc814d09096
+33	578	6910983915209656	SECundum_WebshopParser/CMakeFiles/SECundum_WebshopParser.dir/CAFF/CAFFAnimation.cpp.obj	426a4b4e7b68f81
+20	579	6910983915199660	SECundum_WebshopParser/CMakeFiles/SECundum_WebshopParser.dir/CAFF/CAFFObject.cpp.obj	efc0a9c0df9b8130
+11	581	6910983915209656	SECundum_WebshopParser/CMakeFiles/SECundum_WebshopParser.dir/CIFF/CIFFObject.cpp.obj	8743afc51d7161b5
+1	581	6910983915253358	SECundum_WebshopParser/CMakeFiles/SECundum_WebshopParser.dir/CIFF/CIFFContent.cpp.obj	c4431ef13d464765
+29	584	6910983915285101	SECundum_WebshopParser/CMakeFiles/SECundum_WebshopParser.dir/CAFF/CAFFHeader.cpp.obj	8193f7478756bf1d
+15	592	6910983915369695	SECundum_WebshopParser/CMakeFiles/SECundum_WebshopParser.dir/CIFF/CIFFHeader.cpp.obj	5602675e100ec3f8
+6	3002	6910983939462370	SECundum_WebshopParser/CMakeFiles/SECundum_WebshopParser.dir/SECundum_WebshopParser.cpp.obj	f4a1691732fbd3bd
+3002	3330	6910983942681019	SECundum_WebshopParser/SECundum_WebshopParser.exe	65d356fd6c817d9a
+1	681	6911643429213031	SECundum_WebshopParser/CMakeFiles/SECundum_WebshopParser.dir/CIFF/CIFFHeader.cpp.obj	5602675e100ec3f8
+682	916	6911643431285399	SECundum_WebshopParser/SECundum_WebshopParser.exe	65d356fd6c817d9a
