@@ -4,6 +4,7 @@ import { environment } from "src/environments/environment";
 import {BehaviorSubject, Observable, throwError} from 'rxjs';
 import {HttpClient, HttpHeaderResponse, HttpHeaders} from '@angular/common/http';
 import { Router } from '@angular/router';
+import { Token } from './token';
 
 @Injectable({
     providedIn: 'root'
@@ -19,16 +20,18 @@ export class UserService{
         console.log("userservice const");
     }
 
+    createAuthorizationHeader(headers: Headers) {
+        headers.append('Authorization', sessionStorage.getItem('token')); 
+      }
 
+      //let headers = new Headers()
+    //this.createAuthorizationHeader(headers)
+    //return this.http.get<User>(`${this.apiServerUrl}/user/verify/${code}`{ //valszeg gethez nem lehet adni, esetleg guglizzunk utána
+       // headers: headers
+   // })
 
-    public login(user: User):Observable<User>{
-        var t = this.http.post<User>(`${this.apiServerUrl}/user/login`, user);
-        return t;
-             
-     }
-
-     public verify(code: String): Observable<User>{
-        return this.http.get<User>(`${this.apiServerUrl}/user/verify/${code}`)
+    public login(user: User):Observable<Token>{
+        return this.http.post<Token>(`${this.apiServerUrl}/user/login`, user);
      }
 
 
@@ -46,6 +49,7 @@ export class UserService{
         const t = this.http.get<User>(`${this.apiServerUrl}/user/${username}`)
         return t;
     }
+
 
     public logout(){
         this.http.get(`${this.apiServerUrl}/logout`);

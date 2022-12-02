@@ -79,12 +79,11 @@ public class UserController {
         return userService.updateUser(user);
     }
 
-    @GetMapping("/user/login")
+    @PostMapping("/user/login")
     public ResponseEntity<?> loginUser(@RequestBody User user) throws Exception {
         User loggedInUser = userService.login(user);
         final String token = jwtTokenUtil.generateToken(loggedInUser);
         loggedInUser.setJwtToken(token);
-
         userService.updateUser(loggedInUser);
         return ResponseEntity.ok(new JwtResponse(token));
     }
