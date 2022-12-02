@@ -21,7 +21,7 @@ public class UserController {
     private JwtTokenUtil jwtTokenUtil;
 
     @Autowired
-    public UserController(@Lazy UserService userService) {
+    public UserController(UserService userService) {
         this.userService = userService;
     }
 

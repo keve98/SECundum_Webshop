@@ -27,7 +27,7 @@ class SeCundumWebshopServerApplicationTests {
 	public static void init(){
 		restTemplate = new RestTemplate();
 	}
-
+/*
 	@Test
 	public void testGetAllCaffs() throws IOException {
 		HttpUriRequest request = new HttpGet(baseUrl + "/caff/getAll");
@@ -38,6 +38,6 @@ class SeCundumWebshopServerApplicationTests {
 				httpResponse.getStatusLine().getStatusCode(),
 				equalTo(HttpStatus.SC_OK)
 		);
-	}
+	}*/
 
 }

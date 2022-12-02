@@ -30,7 +30,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 
 	@Autowired
-	@Lazy
 	private JwtRequestFilter jwtRequestFilter;
 
 	/*@Autowired
