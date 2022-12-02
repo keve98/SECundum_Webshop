@@ -19,19 +19,21 @@ export class UserService{
         console.log("userservice const");
     }
 
+
+
     public login(user: User):Observable<User>{
-        var t = this.http.post<User>(`${this.apiServerUrl}/login`, user);
+        var t = this.http.post<User>(`${this.apiServerUrl}/user/login`, user);
         return t;
              
      }
 
      public verify(code: String): Observable<User>{
-        return this.http.get<User>(`${this.apiServerUrl}/verify/${code}`)
+        return this.http.get<User>(`${this.apiServerUrl}/user/verify/${code}`)
      }
 
 
-    public saveUserData(user: User): Observable<any> {
-        return this.http.post<any>(`${this.apiServerUrl}/save`, user);
+    public saveUserData(user: User): Observable<User> {
+        return this.http.post<User>(`${this.apiServerUrl}/user/save`, user);
       }
     
 
