@@ -19,10 +19,6 @@ export class UserService{
         console.log("userservice const");
     }
 
-    public getLoggedInUser() : Observable<User>{
-        return this.user
-    }
-
     public login(user: User):Observable<User>{
         var t = this.http.post<User>(`${this.apiServerUrl}/login`, user);
         return t;
