@@ -7,7 +7,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.example.SECundum_WebshopServer.DataModels.User;
 import com.example.SECundum_WebshopServer.DataServices.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -24,6 +23,7 @@ import io.jsonwebtoken.ExpiredJwtException;
 public class JwtRequestFilter extends OncePerRequestFilter {
 
 	@Autowired
+	@Lazy
 	private UserService jwtUserDetailsService;
 
 	@Autowired

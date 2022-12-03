@@ -80,14 +80,25 @@
 			<version>2.6</version>
 		</dependency>
 	</dependencies>
-
+	<pluginRepositories>
+		<pluginRepository>
+			<id>maven2</id>
+			<url>https://repo.maven.apache.org/maven2/</url>
+		</pluginRepository>
+	</pluginRepositories>
 	<build>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+			<plugin>
+				<groupId>org.sonarsource.scanner.maven</groupId>
+				<artifactId>sonar-maven-plugin</artifactId>
+				<version>3.4.0.905</version>
+			</plugin>
 		</plugins>
+
 	</build>
 
 </project>
