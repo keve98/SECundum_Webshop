@@ -78,22 +78,22 @@ vector<unsigned char> LoadFileFromInput(string const& filepath)
 int main(int argc, const char* argv[])
 {
     try {
-        if (argc > 1) {
+        if (true /*argc > 1*/) {
             //For testing: "C:\\Users\\Kocsi Levente\\OneDrive\\Asztali gép\\SECundum\\1.caff"
             //For testing: "C:\\Users\\Kocsi Levente\\OneDrive\\Asztali gép\\SECundum\\1_bad.caff"
-            CAFFObject* toParse = new CAFFObject(LoadFileFromInput(argv[1]));
+            CAFFObject* toParse = new CAFFObject(LoadFileFromInput("C:\\Users\\Kocsi Levente\\OneDrive\\Asztali gép\\SECundum\\1.caff"));
 
             if (toParse->IsValid()) {
                 cout << "The .caff file is successfuly read!" << endl;
                 WriteCAFFTToJSONandBMP("myCaff", toParse);
+                delete toParse;
                 return 1;
             }
             else {
                 cout << "The .caff file is invalid and cannot be read!" << endl;
+                delete toParse;
                 return 0;
             }
-
-            delete toParse;
         }
         else {
             cout << "Please call the application with parameters!" << endl;
