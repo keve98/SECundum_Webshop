@@ -8,12 +8,14 @@ import { LoginComponent } from './login/login.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'
 import { AuthInterceptor } from './authconfig.interceptor';
 import { LightboxModule } from 'ngx-lightbox';
+import { PhotoGalleryComponent } from './photo-gallery/photo-gallery.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     RegistrationComponent,
-    LoginComponent
+    LoginComponent,
+    PhotoGalleryComponent
   ],
   imports: [
     BrowserModule,

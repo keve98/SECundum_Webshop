@@ -21,7 +21,7 @@ export class UserService{
     }
 
     createAuthorizationHeader(headers: Headers) {
-        headers.append('Authorization', sessionStorage.getItem('token')); 
+        headers.append('Authorization', sessionStorage.getItem('token'));
       }
 
       //let headers = new Headers()
@@ -38,30 +38,4 @@ export class UserService{
     public saveUserData(user: User): Observable<User> {
         return this.http.post<User>(`${this.apiServerUrl}/user/save`, user);
       }
-    
-
-    public getAllUsers():Observable<User[]>{
-        return this.http.get<User[]>(`${this.apiServerUrl}/admin`);
-    }
-
-
-    public getUserByUsername(username: string): Observable<User>{
-        const t = this.http.get<User>(`${this.apiServerUrl}/user/${username}`)
-        return t;
-    }
-
-
-    public logout(){
-        this.http.get(`${this.apiServerUrl}/logout`);
-    }
-
-    async  isAdminOrUser():Promise<Observable<boolean>>{
-        const t = await this.http.get<boolean>(`${this.apiServerUrl}/isAdmin`)
-        return t;
-    }
-
-    searchUsernames(username: string): Observable<User[]>{
-        const t = this.http.get<User[]>(`${this.apiServerUrl}/searchUsernames/${username}`);
-        return t;
-    }
 }
