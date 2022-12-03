@@ -40,12 +40,10 @@ export class LoginComponent {
             .subscribe(
                 (token: Token) => {
                     this.reloadPage("/");
-                    sessionStorage.setItem('token', token.token);
-                    //alert(sessionStorage.getItem('token'));
+                    sessionStorage.setItem('token', String(token.token));
                     alert(this.username + " signed in.")
                 },
                 (error) =>{
-                    //alert(JSON.stringify(error));
                     alert("Your login attempt was not successful. Please try again.")
                     this.reloadPage("/login");
                 }

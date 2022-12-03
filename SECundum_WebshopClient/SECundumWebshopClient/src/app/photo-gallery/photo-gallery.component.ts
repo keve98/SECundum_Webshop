@@ -31,6 +31,23 @@ export class PhotoGalleryComponent implements OnInit {
       this._albums.push(album);
     }
   }
+
+  download() {
+
+      var path : string = ""
+      this.caffService.downloadCaff(this.caffs[0].content.replace(' ', '_')).subscribe(data=>{
+          path = data.caffFile;
+          alert("png clicked")
+          var anchor=document.createElement('a');
+    	    anchor.setAttribute('href', path);
+    	    anchor.setAttribute('download','');
+    	    document.body.appendChild(anchor);
+    	    anchor.click();
+    	    anchor.parentNode.removeChild(anchor);
+      })
+
+      
+}
   
 
   open(index: number): void {

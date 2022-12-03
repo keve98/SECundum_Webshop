@@ -3,6 +3,7 @@ package com.example.SECundum_WebshopServer;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.json.simple.JSONObject;
@@ -50,69 +51,13 @@ class SeCundumWebshopServerApplicationTests {
 
 	@Test
 	public void testGetCaff() throws IOException {
-		HttpUriRequest request = new HttpGet(baseUrl + "/caff/get?name=Beautiful_scenery");
+		HttpUriRequest request = new HttpPost(baseUrl + "/caff/get?name=Beautiful_scenery");
 
 		HttpResponse httpResponse = HttpClientBuilder.create().build().execute(request);
 
 		assertThat(
 				httpResponse.getStatusLine().getStatusCode(),
-				equalTo(HttpStatus.SC_OK)
-		);
-	}
-
-	@Test
-	public void testDownloadCaffUnauthorized() throws IOException {
-		URL obj = new URL(baseUrl+"/caff/download?name=Beautiful_scenery");
-		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-		con.setRequestMethod("GET");
-		con.setRequestProperty("Content-Type", "application/json");
-		con.setRequestProperty("Accept", "application/json");
-
-		assertThat(
-				con.getResponseCode(),
-				equalTo(HttpStatus.SC_UNAUTHORIZED)
-		);
-	}
-
-	@Test
-	public void testDownloadCaffAuthorized() throws IOException {
-		URL obj = new URL(baseUrl+"/user/login");
-		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-		con.setRequestMethod("POST");
-		con.setRequestProperty("Content-Type", "application/json");
-		con.setRequestProperty("Accept", "application/json");
-		con.setDoOutput(true);
-		String jsonInputString = "{\"username\": \"lajos\", \"password\": \"martin1234\"}";
-		try(OutputStream os = con.getOutputStream()) {
-			byte[] input = jsonInputString.getBytes("utf-8");
-			os.write(input, 0, input.length);
-		}
-
-		JSONObject json = null;
-
-		try(BufferedReader br = new BufferedReader(
-				new InputStreamReader(con.getInputStream(), "utf-8"))) {
-			StringBuilder response = new StringBuilder();
-			String responseLine = null;
-			while ((responseLine = br.readLine()) != null) {
-				response.append(responseLine.trim());
-			}
-			JSONParser parser = new JSONParser();
-			json = (JSONObject) parser.parse(String.valueOf(response));
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-
-
-		obj = new URL(baseUrl+"/caff/download?name=Beautiful_scenery");
-		con = (HttpURLConnection) obj.openConnection();
-		con.setRequestMethod("GET");
-		con.setRequestProperty("Content-Type", "application/json");
-		con.setRequestProperty("Accept", "application/json");
-		con.setRequestProperty("Authorization", (String) json.get("token"));
-		assertThat(
-				con.getResponseCode(),
-				equalTo(HttpStatus.SC_OK)
+				equalTo(HttpStatus.SC_METHOD_NOT_ALLOWED)
 		);
 	}
 
@@ -289,6 +234,62 @@ class SeCundumWebshopServerApplicationTests {
 		obj = new URL(baseUrl+"/comment/delete?id=1");
 		con = (HttpURLConnection) obj.openConnection();
 		con.setRequestMethod("DELETE");
+		con.setRequestProperty("Content-Type", "application/json");
+		con.setRequestProperty("Accept", "application/json");
+		con.setRequestProperty("Authorization", (String) json.get("token"));
+		assertThat(
+				con.getResponseCode(),
+				equalTo(HttpStatus.SC_OK)
+		);
+	}
+
+	@Test
+	public void testDownloadCaffUnauthorized() throws IOException {
+		URL obj = new URL(baseUrl+"/caff/download?name=Beautiful_scenery");
+		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+		con.setRequestMethod("GET");
+		con.setRequestProperty("Content-Type", "application/json");
+		con.setRequestProperty("Accept", "application/json");
+
+		assertThat(
+				con.getResponseCode(),
+				equalTo(HttpStatus.SC_UNAUTHORIZED)
+		);
+	}
+
+	@Test
+	public void testDownloadCaffAuthorized() throws IOException {
+		URL obj = new URL(baseUrl+"/user/login");
+		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+		con.setRequestMethod("POST");
+		con.setRequestProperty("Content-Type", "application/json");
+		con.setRequestProperty("Accept", "application/json");
+		con.setDoOutput(true);
+		String jsonInputString = "{\"username\": \"lajos\", \"password\": \"martin1234\"}";
+		try(OutputStream os = con.getOutputStream()) {
+			byte[] input = jsonInputString.getBytes("utf-8");
+			os.write(input, 0, input.length);
+		}
+
+		JSONObject json = null;
+
+		try(BufferedReader br = new BufferedReader(
+				new InputStreamReader(con.getInputStream(), "utf-8"))) {
+			StringBuilder response = new StringBuilder();
+			String responseLine = null;
+			while ((responseLine = br.readLine()) != null) {
+				response.append(responseLine.trim());
+			}
+			JSONParser parser = new JSONParser();
+			json = (JSONObject) parser.parse(String.valueOf(response));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+
+
+		obj = new URL(baseUrl+"/caff/download?name=Beautiful_scenery");
+		con = (HttpURLConnection) obj.openConnection();
+		con.setRequestMethod("POST");
 		con.setRequestProperty("Content-Type", "application/json");
 		con.setRequestProperty("Accept", "application/json");
 		con.setRequestProperty("Authorization", (String) json.get("token"));
