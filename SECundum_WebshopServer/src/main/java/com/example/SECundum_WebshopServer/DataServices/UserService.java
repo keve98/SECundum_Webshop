@@ -31,6 +31,7 @@ public class UserService implements UserDetailsService {
     private JavaMailSender mailSender;
 
     @Autowired
+    @Lazy
     public UserService(BCryptPasswordEncoder bCryptPasswordEncoder){
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }

@@ -31,7 +31,7 @@ public class CommentService {
     }
 
     public Comment saveComment(Comment comment){
-        Comment newComment = new Comment(comment.getComment(), comment.getCaff_name());
+        Comment newComment = new Comment(comment.getCaff_name(), comment.getComment());
         Firestore dbFireStore = FirestoreClient.getFirestore();
         ApiFuture<WriteResult> collectionsApiFuture = dbFireStore.collection("comments").document(newComment.getId()).set(newComment);
         return newComment;
@@ -43,5 +43,5 @@ public class CommentService {
         return "Comment deleted.";
     }
 
-
+    
 }

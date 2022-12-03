@@ -30,6 +30,7 @@ public class CaffController {
 
     @GetMapping("/caff/get")
     public ResponseEntity<CAFF> getCaffById(@RequestParam String name) throws Exception {
+        name = name.replace("_", " ");
         return ResponseEntity.ok(caffService.getByName(name));
     }
 
@@ -40,6 +41,7 @@ public class CaffController {
 
     @GetMapping("/caff/download")
     public ResponseEntity<CAFF> downloadCaff(@RequestParam String name) throws Exception {
+        name = name.replace("_", " ");
         return ResponseEntity.ok(caffService.downloadCaff(name));
     }
 }
