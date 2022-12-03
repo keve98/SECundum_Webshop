@@ -50,7 +50,6 @@ export class LoginComponent {
                     this.reloadPage("/login");
                 }
             );
-      
     }
 
     reloadPage(url: String){

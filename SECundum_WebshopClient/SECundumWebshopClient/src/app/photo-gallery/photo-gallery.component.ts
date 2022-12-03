@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Lightbox } from 'ngx-lightbox';
+import { CaffService } from "../caff_service";
+import { Caff } from '../caff';
 
 @Component({
   selector: 'app-photo-gallery',
@@ -8,15 +10,19 @@ import { Lightbox } from 'ngx-lightbox';
 })
 export class PhotoGalleryComponent implements OnInit {
 
+  public caffs: Caff[] = [];
   private _albums: any = [];
-  constructor(private _lightbox: Lightbox) {
-    for (let i = 1; i <= 3; i++) {
-      const src = './assets/caff_pictures/image' + i + '.png';
-      const caption = 'Image ' + i + 'caption';
-      const thumb = './assets/caff_pictures/image' + i + '.png';
+  constructor(private _lightbox: Lightbox, private caffService: CaffService) {
+    this.caffService.getAllCaff().subscribe(data=> {
+      this.caffs = data;
+    })
+    this.caffs.forEach(element => {
+      const src = './assets/caff_pictures/' + element.content.replace(' ', '_') + '.png';
+      const caption = element.content.replace(' ', '_') + 'caption';
+      const thumb = './assets/caff_pictures/image' + element.content.replace(' ', '_') + '.png';
       const album = { src: src, caption: caption, thumb: thumb};
       this._albums.push(album);
-    }
+    });
   }
 
   open(index: number): void {
@@ -28,8 +34,8 @@ export class PhotoGalleryComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    
   }
 
-  
 
 }
