@@ -39,7 +39,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "c:/Users/Keve/Desktop/bme/msc/itsec/HF/SECundum_Webshop/SECundum_WebshopParser/out/build/x64-Debug"
+			"value" : "c:/Users/Kocsi Levente/OneDrive/Asztali gép/SECundum/SECundum_Webshop/SECundum_WebshopParser/out/build/x64-Debug"
 		},
 		{
 			"name" : "CMAKE_CACHE_MAJOR_VERSION",
@@ -123,10 +123,10 @@
 				},
 				{
 					"name" : "HELPSTRING",
-					"value" : "CXX compiler"
+					"value" : "No help, variable specified on the command line."
 				}
 			],
-			"type" : "STRING",
+			"type" : "FILEPATH",
 			"value" : "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Tools/MSVC/14.29.30133/bin/Hostx64/x64/cl.exe"
 		},
 		{
@@ -235,10 +235,10 @@
 				},
 				{
 					"name" : "HELPSTRING",
-					"value" : "C compiler"
+					"value" : "No help, variable specified on the command line."
 				}
 			],
-			"type" : "STRING",
+			"type" : "FILEPATH",
 			"value" : "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Tools/MSVC/14.29.30133/bin/Hostx64/x64/cl.exe"
 		},
 		{
@@ -515,7 +515,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "C:/Users/Keve/Desktop/bme/msc/itsec/HF/SECundum_Webshop/SECundum_WebshopParser"
+			"value" : "C:/Users/Kocsi Levente/OneDrive/Asztali gép/SECundum/SECundum_Webshop/SECundum_WebshopParser"
 		},
 		{
 			"name" : "CMAKE_INSTALL_PREFIX",
@@ -527,7 +527,7 @@
 				}
 			],
 			"type" : "PATH",
-			"value" : "C:/Users/Keve/Desktop/bme/msc/itsec/HF/SECundum_Webshop/SECundum_WebshopParser/out/install/x64-Debug"
+			"value" : "C:/Users/Kocsi Levente/OneDrive/Asztali gép/SECundum/SECundum_Webshop/SECundum_WebshopParser/out/install/x64-Debug"
 		},
 		{
 			"name" : "CMAKE_LINKER",
@@ -555,7 +555,7 @@
 				}
 			],
 			"type" : "FILEPATH",
-			"value" : "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe"
+			"value" : "C:/PROGRA~2/MICROS~2/2019/COMMUN~1/Common7/IDE/COMMON~1/MICROS~1/CMake/Ninja/ninja.exe"
 		},
 		{
 			"name" : "CMAKE_MODULE_LINKER_FLAGS",
@@ -651,7 +651,7 @@
 				}
 			],
 			"type" : "FILEPATH",
-			"value" : "C:/Program Files (x86)/Windows Kits/10/bin/10.0.22000.0/x64/mt.exe"
+			"value" : "C:/Program Files (x86)/Windows Kits/10/bin/10.0.19041.0/x64/mt.exe"
 		},
 		{
 			"name" : "CMAKE_NUMBER_OF_MAKEFILES",
@@ -739,7 +739,7 @@
 				}
 			],
 			"type" : "FILEPATH",
-			"value" : "C:/Program Files (x86)/Windows Kits/10/bin/10.0.22000.0/x64/rc.exe"
+			"value" : "C:/Program Files (x86)/Windows Kits/10/bin/10.0.19041.0/x64/rc.exe"
 		},
 		{
 			"name" : "CMAKE_RC_COMPILER_WORKS",
@@ -1063,7 +1063,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "C:/Users/Keve/Desktop/bme/msc/itsec/HF/SECundum_Webshop/SECundum_WebshopParser/out/build/x64-Debug"
+			"value" : "C:/Users/Kocsi Levente/OneDrive/Asztali gép/SECundum/SECundum_Webshop/SECundum_WebshopParser/out/build/x64-Debug"
 		},
 		{
 			"name" : "SECundum_WebshopParser_SOURCE_DIR",
@@ -1075,7 +1075,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "C:/Users/Keve/Desktop/bme/msc/itsec/HF/SECundum_Webshop/SECundum_WebshopParser"
+			"value" : "C:/Users/Kocsi Levente/OneDrive/Asztali gép/SECundum/SECundum_Webshop/SECundum_WebshopParser"
 		}
 	],
 	"kind" : "cache",

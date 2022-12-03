@@ -78,10 +78,10 @@ vector<unsigned char> LoadFileFromInput(string const& filepath)
 int main(int argc, const char* argv[])
 {
     try {
-        if (true /*argc > 1*/) {
+        if (argc > 1) {
             //For testing: "C:\\Users\\Kocsi Levente\\OneDrive\\Asztali gép\\SECundum\\1.caff"
             //For testing: "C:\\Users\\Kocsi Levente\\OneDrive\\Asztali gép\\SECundum\\1_bad.caff"
-            CAFFObject* toParse = new CAFFObject(LoadFileFromInput("C:\\Users\\Kocsi Levente\\OneDrive\\Asztali gép\\SECundum\\1.caff"));
+            CAFFObject* toParse = new CAFFObject(LoadFileFromInput(argv[1]));
 
             if (toParse->IsValid()) {
                 cout << "The .caff file is successfuly read!" << endl;
