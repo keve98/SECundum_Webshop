@@ -5,7 +5,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
-import javax.xml.*;
 
 import com.example.SECundum_WebshopServer.DataModels.User;
 import org.springframework.beans.factory.annotation.Value;
