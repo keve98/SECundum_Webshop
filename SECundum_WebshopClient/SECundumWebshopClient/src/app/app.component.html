@@ -17,9 +17,4 @@
   <div class="container">
     <router-outlet></router-outlet>
   </div>
-  <div class="imgcontainer">
-    <div class="gallery" *ngFor="let image of _albums; let i=index">
-      <img src="{{image.thumb}}" (click)="open(i)"/>
-    </div>
-  </div>
 </div>

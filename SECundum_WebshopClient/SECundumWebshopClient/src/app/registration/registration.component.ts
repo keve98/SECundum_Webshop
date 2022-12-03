@@ -10,10 +10,6 @@ import { UserService } from "../user_service";
 })
 export class RegistrationComponent{
 
-
-
-
-
     public user= new User();
 
     constructor(private userService: UserService, private router : Router){ }
@@ -29,7 +25,7 @@ export class RegistrationComponent{
                 this.router.navigate([`/login`]);
             },
             (error) => {
-                alert("Something went wrong, try again.");
+                alert("Your registration attempt was not successful. Please try again.");
                 console.log(error);
                 this.router.navigate([`/registration`]);
             }
