@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { User } from "../user";
 import { RouterModule, Routes } from '@angular/router';
 import { HttpErrorResponse } from "@angular/common/http";
+import { Token } from '../token';
 
 
 
@@ -37,16 +38,18 @@ export class LoginComponent {
         this.user.password = this.password;
         this.userService.login(this.user)
             .subscribe(
-                (user: User) => {
+                (token: Token) => {
                     this.reloadPage("/");
-                    sessionStorage.setItem('loggedUser', this.username);
+                    sessionStorage.setItem('token', token.token);
+                    //alert(sessionStorage.getItem('token'));
+                    alert(this.username + " signed in.")
                 },
                 (error) =>{
-                    alert(JSON.stringify(error));
+                    //alert(JSON.stringify(error));
+                    alert("Your login attempt was not successful. Please try again.")
                     this.reloadPage("/login");
                 }
             );
-      
     }
 
     reloadPage(url: String){

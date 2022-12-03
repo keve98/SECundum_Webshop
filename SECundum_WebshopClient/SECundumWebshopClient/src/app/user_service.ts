@@ -4,6 +4,7 @@ import { environment } from "src/environments/environment";
 import {BehaviorSubject, Observable, throwError} from 'rxjs';
 import {HttpClient, HttpHeaderResponse, HttpHeaders} from '@angular/common/http';
 import { Router } from '@angular/router';
+import { Token } from './token';
 
 @Injectable({
     providedIn: 'root'
@@ -19,47 +20,22 @@ export class UserService{
         console.log("userservice const");
     }
 
-    public getLoggedInUser() : Observable<User>{
-        return this.user
-    }
-
-    public login(user: User):Observable<User>{
-        var t = this.http.post<User>(`${this.apiServerUrl}/login`, user);
-        return t;
-             
-     }
-
-     public verify(code: String): Observable<User>{
-        return this.http.get<User>(`${this.apiServerUrl}/verify/${code}`)
-     }
-
-
-    public saveUserData(user: User): Observable<any> {
-        return this.http.post<any>(`${this.apiServerUrl}/save`, user);
+    createAuthorizationHeader(headers: Headers) {
+        headers.append('Authorization', sessionStorage.getItem('token'));
       }
-    
 
-    public getAllUsers():Observable<User[]>{
-        return this.http.get<User[]>(`${this.apiServerUrl}/admin`);
-    }
+      //let headers = new Headers()
+    //this.createAuthorizationHeader(headers)
+    //return this.http.get<User>(`${this.apiServerUrl}/user/verify/${code}`{ //valszeg gethez nem lehet adni, esetleg guglizzunk utána
+       // headers: headers
+   // })
+
+    public login(user: User):Observable<Token>{
+        return this.http.post<Token>(`${this.apiServerUrl}/user/login`, user);
+     }
 
 
-    public getUserByUsername(username: string): Observable<User>{
-        const t = this.http.get<User>(`${this.apiServerUrl}/user/${username}`)
-        return t;
-    }
-
-    public logout(){
-        this.http.get(`${this.apiServerUrl}/logout`);
-    }
-
-    async  isAdminOrUser():Promise<Observable<boolean>>{
-        const t = await this.http.get<boolean>(`${this.apiServerUrl}/isAdmin`)
-        return t;
-    }
-
-    searchUsernames(username: string): Observable<User[]>{
-        const t = this.http.get<User[]>(`${this.apiServerUrl}/searchUsernames/${username}`);
-        return t;
-    }
+    public saveUserData(user: User): Observable<User> {
+        return this.http.post<User>(`${this.apiServerUrl}/user/save`, user);
+      }
 }

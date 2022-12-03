@@ -6,12 +6,14 @@ import com.example.SECundum_WebshopServer.RandomString;
 import com.example.SECundum_WebshopServer.Security.Config.JwtTokenUtil;
 import com.example.SECundum_WebshopServer.Security.model.JwtResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.concurrent.ExecutionException;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 public class UserController {
 
     public UserService userService;
@@ -20,7 +22,7 @@ public class UserController {
     private JwtTokenUtil jwtTokenUtil;
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(@Lazy UserService userService) {
         this.userService = userService;
     }
 
@@ -50,7 +52,6 @@ public class UserController {
         return userService.saveUser(newUserEntity);
     }
 
-    // nem kell
     @GetMapping("/user/get")
     public User getUser(@RequestParam String username) throws Exception {
 
@@ -78,12 +79,11 @@ public class UserController {
         return userService.updateUser(user);
     }
 
-    @GetMapping("/user/login")
+    @PostMapping("/user/login")
     public ResponseEntity<?> loginUser(@RequestBody User user) throws Exception {
         User loggedInUser = userService.login(user);
         final String token = jwtTokenUtil.generateToken(loggedInUser);
         loggedInUser.setJwtToken(token);
-
         userService.updateUser(loggedInUser);
         return ResponseEntity.ok(new JwtResponse(token));
     }

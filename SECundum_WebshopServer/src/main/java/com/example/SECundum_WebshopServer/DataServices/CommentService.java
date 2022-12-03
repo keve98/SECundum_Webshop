@@ -6,7 +6,6 @@ import com.google.cloud.firestore.Firestore;
 import com.google.cloud.firestore.QuerySnapshot;
 import com.google.cloud.firestore.WriteResult;
 import com.google.firebase.cloud.FirestoreClient;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -31,7 +30,7 @@ public class CommentService {
     }
 
     public Comment saveComment(Comment comment){
-        Comment newComment = new Comment(comment.getComment(), comment.getCaff_name());
+        Comment newComment = new Comment(comment.getCaff_name(), comment.getComment());
         Firestore dbFireStore = FirestoreClient.getFirestore();
         ApiFuture<WriteResult> collectionsApiFuture = dbFireStore.collection("comments").document(newComment.getId()).set(newComment);
         return newComment;
@@ -43,5 +42,5 @@ public class CommentService {
         return "Comment deleted.";
     }
 
-
+    
 }
