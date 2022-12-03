@@ -27,15 +27,15 @@ export class CaffService {
     }
 
     public getCaffByName(name: string):Observable<Caff> {
-        return this.http.get<Caff>(`${this.apiServerUrl}/caff/get/${name}`);
+        return this.http.get<Caff>(`${this.apiServerUrl}/caff/get?name=${name}`);
     }
 
     public downloadCaff(name: string):Observable<Caff> {
         return this.http.get<Caff>(`${this.apiServerUrl}/caff/download`);
     }
 
-    public uploadCaff(path: string):Observable<Caff> {
-        return this.http.post<Caff>(`${this.apiServerUrl}/caff/save`, path);
+    public uploadCaff(file: File):Observable<Caff> {
+        return this.http.post<Caff>(`${this.apiServerUrl}/caff/save`, file);
     }
 
 }

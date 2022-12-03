@@ -4,12 +4,14 @@ import { LoginComponent } from './login';
 import { RegistrationComponent } from './registration';
 import { AuthGuard } from './auth.guard';       // path után ezt baszd oda amit nem láthat aki nincs bejelentkezve: ,canActivate: [AuthGuard]
 import { PhotoGalleryComponent } from './photo-gallery/photo-gallery.component';
+import { PhotoDetailsComponent } from './photo-details/photo-details.component';
 
 
 const routes: Routes = [
   {path:'login',component:LoginComponent},
   {path: 'registration', component: RegistrationComponent},
   {path: 'photo-gallery', component: PhotoGalleryComponent},
+  {path: 'photo-details', component: PhotoDetailsComponent},
   {path: '', redirectTo: 'photo-gallery', pathMatch: 'full'}
 ];
 

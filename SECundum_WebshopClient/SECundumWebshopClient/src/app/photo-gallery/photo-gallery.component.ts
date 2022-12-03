@@ -3,6 +3,7 @@ import { Lightbox } from 'ngx-lightbox';
 import { CaffService } from "../caff_service";
 import { Caff } from '../caff';
 import { async } from '@angular/core/testing';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-photo-gallery',
@@ -14,12 +15,13 @@ export class PhotoGalleryComponent implements OnInit {
   
   public caffs: Caff[] = [];
   private _albums: any = [];
-  constructor(private _lightbox: Lightbox, private caffService: CaffService) {
+  constructor(private _lightbox: Lightbox, private caffService: CaffService, private router: Router) {
     this.caffService.getAllCaff().subscribe(data => {
       this.caffs = data;
       this.showPictures();
     })
   }
+
 
 
   showPictures():void{
@@ -31,6 +33,19 @@ export class PhotoGalleryComponent implements OnInit {
       this._albums.push(album);
     }
   }
+
+  public openPic(name) {
+    sessionStorage.setItem('clickedImageName', name.replace('caption', ''));
+    //alert(sessionStorage.getItem('clickedImageName'));
+    this.reloadPage('/photo-details');
+  }
+
+  reloadPage(url: String){
+    this.router.navigate([`${url}`])
+        .then(() => {
+window.location.reload();
+});
+}
   
 
   open(index: number): void {

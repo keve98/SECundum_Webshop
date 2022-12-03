@@ -1,0 +1,11 @@
+<h1>{{imgName}}</h1>
+<div class="container">
+    <img src="{{imgPath}}"/>
+    <p>Comments</p>
+    <div class="comments" *ngFor="let comment for _comments">
+        <hr>
+            <label for="commentid"><b>ID</b></label>
+            <label for="comment"><b>Comment</b></label>
+        <hr>
+    </div>
+</div>
