@@ -33,34 +33,20 @@ export class PhotoGalleryComponent implements OnInit {
       this._albums.push(album);
     }
   }
+
+
   public openPic(name) {
     sessionStorage.setItem('clickedImageName', name.replace('caption', ''));
     //alert(sessionStorage.getItem('clickedImageName'));
     this.reloadPage('/photo-details');
   }
 
+
   reloadPage(url: String){
     this.router.navigate([`${url}`])
         .then(() => {
 window.location.reload();
 });
-}
-
-download() {
-
-      var path : string = ""
-      this.caffService.downloadCaff(this.caffs[0].content.replace(' ', '_')).subscribe(data=>{
-          path = data.caffFile;
-          alert("png clicked")
-          var anchor=document.createElement('a');
-    	    anchor.setAttribute('href', path);
-    	    anchor.setAttribute('download','');
-    	    document.body.appendChild(anchor);
-    	    anchor.click();
-    	    anchor.parentNode.removeChild(anchor);
-      })
-
-      
 }
 
   open(index: number): void {

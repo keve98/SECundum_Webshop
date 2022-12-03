@@ -29,7 +29,6 @@ export class LoginComponent {
     }
 
 
-
     async doLogin() {
         this.username = (<HTMLInputElement>document.getElementById('uname')).value;
         this.password = (<HTMLInputElement>document.getElementById('psw')).value;

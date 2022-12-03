@@ -1,6 +1,7 @@
 <h1>{{imgName}}</h1>
 <div class="container">
     <img src="{{imgPath}}"/>
+    <button type="submit" (click)="downloadFile()">Download</button>
     <h1>Comments</h1>
     <div class="comments" *ngFor="let comment of _albums">
         <p>{{comment.id}}. comment: {{comment.comment}}</p>

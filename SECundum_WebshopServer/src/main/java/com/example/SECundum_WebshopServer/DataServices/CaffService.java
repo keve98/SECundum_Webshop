@@ -64,10 +64,9 @@ public class CaffService {
 
     }
 
-    public CAFF downloadCaff(String name) throws Exception {
+    public void downloadCaff(String name) throws Exception {
         CAFF caff = getByName(name);
         deleteCaff(name);
-        return caff;
     }
 
     public CAFF saveCaff(MultipartFile file) throws Exception {

@@ -1,6 +1,5 @@
 <div class="imgcontainer">
     <div class="gallery" *ngFor="let image of _albums" (click)="openPic(image.caption)">
         <img src="{{image.thumb}}"/>
-        <button type="submit" (click)="download()">Download</button>
     </div>
 </div>

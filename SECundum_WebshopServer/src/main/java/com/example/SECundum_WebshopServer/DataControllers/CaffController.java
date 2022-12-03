@@ -4,11 +4,16 @@ package com.example.SECundum_WebshopServer.DataControllers;
 import com.example.SECundum_WebshopServer.DataModels.CAFF;
 import com.example.SECundum_WebshopServer.DataServices.CaffService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
+
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
@@ -38,8 +43,13 @@ public class CaffController {
     }
 
     @GetMapping("/caff/download")
-    public ResponseEntity<CAFF> downloadCaff(@RequestParam String name) throws Exception {
-        name = name.replace("_", " ");
-        return ResponseEntity.ok(caffService.downloadCaff(name));
+    @ResponseBody
+    public ResponseEntity<?> getFile(@RequestParam String filename) throws Exception {
+        caffService.downloadCaff(filename.replace("_", " "));
+        Path root = Paths.get("uploads");
+        filename += ".caff";
+        Path file = root.resolve(filename);
+        Resource r = new UrlResource(file.toUri());
+        return ResponseEntity.ok().body(r);
     }
 }

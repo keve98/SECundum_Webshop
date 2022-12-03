@@ -77,7 +77,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.authorizeRequests()
 				.antMatchers("/authenticate","/user/login", "/user/verify", "/comment/getAll", "/caff/getAll", "/caff/get", "/user/save").permitAll()
 				.antMatchers("/user/get", "/comment/delete").hasRole("ADMIN")
-				.antMatchers("/comment/save", "/caff/save", "/caff/download").hasAnyRole("ADMIN", "USER")
+				.antMatchers("/caff/download", "/comment/save", "/caff/save").hasAnyRole("ADMIN", "USER")
 				// all other requests need to be authenticated
 				.anyRequest().authenticated().and().
 				// make sure we use stateless session; session won't be used to

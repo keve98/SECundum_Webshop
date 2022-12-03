@@ -36,7 +36,7 @@ export class CaffService {
         return this.http.get<Caff>(`${this.apiServerUrl}/caff/get/${name}`);
     }
 
-    public downloadCaff(name: string):Observable<Caff> {
+    public downloadCaff(name: string):Observable<any> {
         var token = sessionStorage.getItem('token')
             const httpOptions = {
                 headers: new HttpHeaders({
@@ -44,9 +44,7 @@ export class CaffService {
                   'Auth': token
                 })
               };
-            
-
-        return this.http.get<Caff>(`${this.apiServerUrl}/caff/download?name=${name}`, httpOptions);
+        return this.http.get<any>(`${this.apiServerUrl}/caff/download?name=${name}`, httpOptions);
     }
 
     public uploadCaff(file: File):Observable<Caff> {
