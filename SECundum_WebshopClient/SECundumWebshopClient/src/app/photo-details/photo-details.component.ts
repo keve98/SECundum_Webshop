@@ -45,7 +45,7 @@ downloadFile(): void{
     })
 
   this.http.get(baseUrl, {headers, responseType: 'blob' as 'json'}).subscribe(
-      (response: any) =>{
+      (response: any) =>{/*
           let dataType = response.type;
           let binaryData = [];
           binaryData.push(response);
@@ -54,7 +54,15 @@ downloadFile(): void{
           if (filename)
               downloadLink.setAttribute('download', filename);
           document.body.appendChild(downloadLink);
-          downloadLink.click();
+          downloadLink.click();*/
+          let fileName = filename + '.caff';    
+          let dataType = response.type;         
+          let binaryData = [];
+          binaryData.push(response);
+            var link = document.createElement('a');
+            link.href = window.URL.createObjectURL(new Blob(binaryData, {type: dataType}));
+            link.download = fileName;
+            link.click();
       }
   )
 }
