@@ -1,0 +1,74 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"childIndexes" : 
+					[
+						1
+					],
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.8"
+					},
+					"projectIndex" : 0,
+					"source" : "."
+				},
+				{
+					"build" : "SECundum_WebshopParser",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.8"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "SECundum_WebshopParser",
+					"targetIndexes" : 
+					[
+						0
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0,
+						1
+					],
+					"name" : "SECundum_WebshopParser",
+					"targetIndexes" : 
+					[
+						0
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 1,
+					"id" : "SECundum_WebshopParser::@5c24be9093fb13026afd",
+					"jsonFile" : "target-SECundum_WebshopParser-Debug-c1890465c9b1ddab5f70.json",
+					"name" : "SECundum_WebshopParser",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "C:/Users/Kocsi Levente/OneDrive/Asztali gép/SECundum/SECundum_Webshop/SECundum_WebshopParser/out/build/x64-Debug",
+		"source" : "C:/Users/Kocsi Levente/OneDrive/Asztali gép/SECundum/SECundum_Webshop/SECundum_WebshopParser"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 2
+	}
+}

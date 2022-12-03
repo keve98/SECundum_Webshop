@@ -1,8 +1,8 @@
-# Install script for directory: C:/Users/Keve/Desktop/bme/msc/itsec/HF/SECundum_Webshop/SECundum_WebshopParser
+# Install script for directory: C:/Users/Kocsi Levente/OneDrive/Asztali gép/SECundum/SECundum_Webshop/SECundum_WebshopParser
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "C:/Users/Keve/Desktop/bme/msc/itsec/HF/SECundum_Webshop/SECundum_WebshopParser/out/install/x64-Debug")
+  set(CMAKE_INSTALL_PREFIX "C:/Users/Kocsi Levente/OneDrive/Asztali gép/SECundum/SECundum_Webshop/SECundum_WebshopParser/out/install/x64-Debug")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -34,7 +34,7 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("C:/Users/Keve/Desktop/bme/msc/itsec/HF/SECundum_Webshop/SECundum_WebshopParser/out/build/x64-Debug/SECundum_WebshopParser/cmake_install.cmake")
+  include("C:/Users/Kocsi Levente/OneDrive/Asztali gép/SECundum/SECundum_Webshop/SECundum_WebshopParser/out/build/x64-Debug/SECundum_WebshopParser/cmake_install.cmake")
 
 endif()
 
@@ -46,5 +46,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "C:/Users/Keve/Desktop/bme/msc/itsec/HF/SECundum_Webshop/SECundum_WebshopParser/out/build/x64-Debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "C:/Users/Kocsi Levente/OneDrive/Asztali gép/SECundum/SECundum_Webshop/SECundum_WebshopParser/out/build/x64-Debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
