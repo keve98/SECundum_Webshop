@@ -9,13 +9,15 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'
 import { AuthInterceptor } from './authconfig.interceptor';
 import { LightboxModule } from 'ngx-lightbox';
 import { PhotoGalleryComponent } from './photo-gallery/photo-gallery.component';
+import { PhotoDetailsComponent } from './photo-details/photo-details.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     RegistrationComponent,
     LoginComponent,
-    PhotoGalleryComponent
+    PhotoGalleryComponent,
+    PhotoDetailsComponent
   ],
   imports: [
     BrowserModule,

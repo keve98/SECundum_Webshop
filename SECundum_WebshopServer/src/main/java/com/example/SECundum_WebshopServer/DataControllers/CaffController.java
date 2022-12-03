@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 public class CaffController {
 
     public CaffService caffService;
@@ -25,7 +26,7 @@ public class CaffController {
         return ResponseEntity.ok(caffService.getAllCaff());
     }
 
-    @GetMapping("/caff/get")
+    @GetMapping ("/caff/get")
     public ResponseEntity<CAFF> getCaffById(@RequestParam String name) throws Exception {
         name = name.replace("_", " ");
         return ResponseEntity.ok(caffService.getByName(name));
