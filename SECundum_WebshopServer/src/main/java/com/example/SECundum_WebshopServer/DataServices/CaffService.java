@@ -66,9 +66,12 @@ public class CaffService {
 
     public CAFF saveCaff(MultipartFile file) throws Exception {
         CAFF caff = uploadedCaffHandle(file);
-        Firestore dbFireStore = FirestoreClient.getFirestore();
-        ApiFuture<WriteResult> collectionsApiFuture = dbFireStore.collection("caffs").document(caff.getContent()).set(caff);
-        return caff;
+        if(caff != null) {
+            Firestore dbFireStore = FirestoreClient.getFirestore();
+            ApiFuture<WriteResult> collectionsApiFuture = dbFireStore.collection("caffs").document(caff.getContent()).set(caff);
+            return caff;
+        }
+        throw new Exception("Invalid caff file.");
     }
 
     public void deleteCaff(String name){
@@ -100,39 +103,44 @@ public class CaffService {
         file.transferTo(dest);
 
         //parse caff file to json and bmp with cmd commands
-        caffParsing(filePath);
-
-        String pathToParsedFiles = projectPath;
-        pathToParsedFiles = pathToParsedFiles.replace("SECundum_WebshopServer", "");
-        pathToParsedFiles += "SECundum_WebshopParser\\out\\build\\x64-Debug\\SECundum_WebshopParser";
-
-
-        String caffJsonPath = pathToParsedFiles + "\\myCaff.json";
-
-        //get caffsContentName
-        String caffName = getCaffNameFromJson(caffJsonPath);
+        int exitcode = caffParsing(filePath);
+        if(exitcode == 1) {
+            String pathToParsedFiles = projectPath;
+            pathToParsedFiles = pathToParsedFiles.replace("SECundum_WebshopServer", "");
+            pathToParsedFiles += "SECundum_WebshopParser\\out\\build\\x64-Debug\\SECundum_WebshopParser";
 
 
-        // get created bmp image and store in image variable
-        String caffImagePath = pathToParsedFiles + "\\myCaff_0.bmp";
+            String caffJsonPath = pathToParsedFiles + "\\myCaff.json";
 
-        //convert bmp to png
-        BufferedImage bmpImage = ImageIO.read(new File(caffImagePath));
-        String outputpath = pathToParsedFiles + "\\"+ caffName.replace( " ", "_") + ".png";
-        File outputFile = new File(outputpath);
-        ImageIO.write(bmpImage, "PNG", outputFile);
-
-        File uploads = new File(projectPath.replace("SECundum_WebshopServer", "SECundum_WebshopClient") + "\\SECundumWebshopClient\\src\\assets\\caff_pictures\\" + caffName.replace( " ", "_") + ".png");
-
-        FileUtils.copyFile(outputFile, uploads);
-
-        //rename caff file in upload directory
-        Path source = Paths.get(filePath);
-        Files.move(source, source.resolveSibling(caffName.replace(" ", "_") + ".caff"));
+            //get caffsContentName
+            String caffName = getCaffNameFromJson(caffJsonPath);
 
 
-        CAFF caff = new CAFF(caffName);
-        return caff;
+            // get created bmp image and store in image variable
+            String caffImagePath = pathToParsedFiles + "\\myCaff_0.bmp";
+
+            //convert bmp to png
+            BufferedImage bmpImage = ImageIO.read(new File(caffImagePath));
+            String outputpath = pathToParsedFiles + "\\" + caffName.replace(" ", "_") + ".png";
+            File outputFile = new File(outputpath);
+            ImageIO.write(bmpImage, "PNG", outputFile);
+
+            File uploads = new File(projectPath.replace("SECundum_WebshopServer", "SECundum_WebshopClient") + "\\SECundumWebshopClient\\src\\assets\\caff_pictures\\" + caffName.replace(" ", "_") + ".png");
+
+            FileUtils.copyFile(outputFile, uploads);
+
+            //rename caff file in upload directory
+            Path source = Paths.get(filePath);
+            Files.move(source, source.resolveSibling(caffName.replace(" ", "_") + ".caff"));
+
+
+            CAFF caff = new CAFF(caffName);
+            return caff;
+        }else{
+            dest.delete();
+            return null;
+        }
+
     }
 
     private String getCaffNameFromJson(String caffJsonPath) throws IOException, ParseException {
@@ -151,7 +159,7 @@ public class CaffService {
         return caption;
     }
 
-    public void caffParsing(String filePath) throws IOException, InterruptedException {
+    public int caffParsing(String filePath) throws IOException, InterruptedException {
         String[] command = new String[3];
         command[0] = "cmd";
         command[1] = "/c";
@@ -162,5 +170,6 @@ public class CaffService {
 
         int exitCode = process.waitFor();
         System.out.println("\nExited with error code : " + exitCode);
+        return exitCode;
     }
 }
