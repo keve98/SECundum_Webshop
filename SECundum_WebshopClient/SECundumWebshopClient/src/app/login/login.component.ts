@@ -59,7 +59,7 @@ export class LoginComponent {
 
             });
     }
-
+    
 
     async doFunction() {
         await this.doLogin();

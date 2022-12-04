@@ -45,8 +45,9 @@ export class AppComponent {
 
   }
 
+
   doLogout() {
-    sessionStorage.setItem('token', '');
+    sessionStorage.removeItem('token');
     document.getElementById('sign_in').style.visibility = "visible";
     document.getElementById('sign_up').style.visibility = "visible";
     document.getElementById('sign_out').style.visibility = "hidden";
@@ -58,5 +59,18 @@ export class AppComponent {
         window.location.reload();
       });
   }
+
+  ngOnInit(): void {
+    if ("token" in sessionStorage) {
+      document.getElementById('sign_in').style.visibility = "hidden";
+      document.getElementById('sign_up').style.visibility = "hidden";
+      document.getElementById('sign_out').style.visibility = "visible";
+    }
+    else {
+      document.getElementById('sign_in').style.visibility = "visible";
+      document.getElementById('sign_up').style.visibility = "visible";
+      document.getElementById('sign_out').style.visibility = "hidden";
+    }
+}
 
 }
