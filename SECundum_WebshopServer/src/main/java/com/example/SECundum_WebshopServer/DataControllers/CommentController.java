@@ -29,7 +29,7 @@ public class CommentController {
 
     @GetMapping("/comment/getAll")
     public ResponseEntity<List<Comment>> getAllComments(@RequestParam String caffName) throws ExecutionException, InterruptedException {
-        caffName = caffName.replace("_", " ");
+        //caffName = caffName.replace("_", " ");
         return ResponseEntity.ok(commentService.getCommentsForCaff(caffName));
     }
 

@@ -24,11 +24,25 @@ export class CommentService {
     }
 
     public saveComment(comment: Comment):Observable<Comment> {
-        return this.http.post<Comment>(`${this.apiServerUrl}/comment/save`, comment);
+        var token = sessionStorage.getItem('token')
+            const httpOptions = {
+                headers: new HttpHeaders({
+                  'Content-Type':  'application/json',
+                  'Auth': token
+                })
+              };
+        return this.http.post<Comment>(`${this.apiServerUrl}/comment/save`, comment, httpOptions);
     }
 
     public deleteComment(id: string):Observable<string> {
-        return this.http.delete<string>(`${this.apiServerUrl}/comment/delete?id=${id}`);
+        var token = sessionStorage.getItem('token')
+            const httpOptions = {
+                headers: new HttpHeaders({
+                  'Content-Type':  'application/json',
+                  'Auth': token
+                })
+              };
+        return this.http.delete<string>(`${this.apiServerUrl}/comment/delete?id=${id}`, httpOptions);
     }
 
 }

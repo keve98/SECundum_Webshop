@@ -3,12 +3,11 @@
   <div class="nav">
     <a routerLink="/"><img src="/assets/logo.png" class="brand-logo" alt=""></a>
     <div class="nav-items">
-      <div class="search">
-        <input type="text" class="search-box" placeholder="search pictures">
-        <button class="search-btn">search</button>
-      </div>
-      <a routerLink="/login"><img src="/assets/sign_in.png" alt=""></a>
-      <a routerLink="/registration"><img src="/assets/sign_up.png" alt=""></a>
+      <img src="/assets/upload.png" class="upload" (click)="uploadNewFile()">
+      <input class="hidden" type="file" id="upload-file" name="upload-file" accept=".caff" ngf-max-size="20MB" (change)="addAttachment($event)">
+      <a routerLink="/login"><img src="/assets/sign_in.png" alt="" id="sign_in"></a>
+      <a routerLink="/registration"><img src="/assets/sign_up.png" alt="" id="sign_up"></a>
+      <a routerLink="/"><img src="/assets/sign_out.png" alt="" id="sign_out" (click)="doLogout()"></a>
     </div>
   </div>
 </nav>

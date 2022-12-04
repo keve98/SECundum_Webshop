@@ -20,7 +20,7 @@ export class LoginComponent {
 
 
     routing: string = "";
-    
+
     public user: User = new User;
 
     constructor(private userService: UserService, private router: Router, private route: RouterModule) {
@@ -40,26 +40,30 @@ export class LoginComponent {
                 (token: Token) => {
                     this.reloadPage("/");
                     sessionStorage.setItem('token', String(token.token));
-                    alert(this.username + " signed in.")
+                    alert(this.username + " signed in.");
+                    document.getElementById('sign_in').style.visibility = "hidden";
+                    document.getElementById('sign_up').style.visibility = "hidden";
+                    document.getElementById('sign_out').style.visibility = "visible";
                 },
-                (error) =>{
+                (error) => {
                     alert("Your login attempt was not successful. Please try again.")
                     this.reloadPage("/login");
                 }
             );
     }
 
-    reloadPage(url: String){
+    reloadPage(url: String) {
         this.router.navigate([`${url}`])
             .then(() => {
-    window.location.reload();
-  });
+                window.location.reload();
+
+            });
     }
+    
 
-
-   async doFunction() {
-       await this.doLogin();
-       this.router.navigate([`/`]);
+    async doFunction() {
+        await this.doLogin();
+        this.router.navigate([`/`]);
     }
 
 }

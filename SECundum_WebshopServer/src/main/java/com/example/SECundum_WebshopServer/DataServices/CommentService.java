@@ -38,7 +38,7 @@ public class CommentService {
 
     public String deleteComment(String id){
         Firestore dbFireStore = FirestoreClient.getFirestore();
-        ApiFuture<WriteResult> writeResult = dbFireStore.collection("caffs").document(id).delete();
+        ApiFuture<WriteResult> writeResult = dbFireStore.collection("comments").document(id).delete();
         return "Comment deleted.";
     }
 
