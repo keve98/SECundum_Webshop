@@ -47,7 +47,6 @@ public class CaffController {
     @GetMapping("/caff/download")
     @ResponseBody
     public ResponseEntity<?> getFile(@RequestParam String filename) throws Exception {
-        caffService.downloadCaff(filename.replace("_", " "));
         Path root = Paths.get("uploads");
         filename += ".caff";
         Path file = root.resolve(filename);

@@ -64,11 +64,6 @@ public class CaffService {
 
     }
 
-    public void downloadCaff(String name) throws Exception {
-        CAFF caff = getByName(name);
-        deleteCaff(name);
-    }
-
     public CAFF saveCaff(MultipartFile file) throws Exception {
         CAFF caff = uploadedCaffHandle(file);
         Firestore dbFireStore = FirestoreClient.getFirestore();
