@@ -1,9 +1,17 @@
 <h1>{{imgName}}</h1>
 <div class="container">
     <img src="{{imgPath}}"/>
-    <button type="submit" (click)="downloadFile()">Download</button>
+    <br>
+    <button type="submit" class="downloadbtn" (click)="downloadFile()">Download</button>
     <h1>Comments</h1>
     <div class="comments" *ngFor="let comment of _albums">
         <p>{{comment.id}}. comment: {{comment.comment}}</p>
+        <img src="/assets/delete.png" width="1%" height="1%" (click)="delComment(comment.id)"/>
+        <br><br><br>
+    </div>
+    <div>
+        <label for="commentlabel"><b>Write a new comment</b></label>
+        <input type="text" placeholder="Enter Comment" name="commentinput" id="commentinput" required>
+        <button type="submit" class="commentbtn" (click)="createNewComment()">Comment</button>
     </div>
 </div>

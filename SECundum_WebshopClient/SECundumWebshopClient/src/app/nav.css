@@ -24,6 +24,21 @@
     height: 60px;
 }
 
+.upload{
+    height: 30px;
+    margin-right: 40px;
+}
+
+.hidden {
+    visibility: hidden;
+    width: 1px;
+    height: 1px;
+}
+
+.visible {
+    visibility: visible;
+}
+
 .nav-items{
     display: flex;
     align-items: center;

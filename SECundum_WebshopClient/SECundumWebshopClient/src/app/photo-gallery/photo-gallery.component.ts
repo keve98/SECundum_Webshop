@@ -37,7 +37,6 @@ export class PhotoGalleryComponent implements OnInit {
 
   public openPic(name) {
     sessionStorage.setItem('clickedImageName', name.replace('caption', ''));
-    //alert(sessionStorage.getItem('clickedImageName'));
     this.reloadPage('/photo-details');
   }
 
